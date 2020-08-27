@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-
 import com.kpetrov.loftcoin.activity.ui.main.MainActivity;
 import com.kpetrov.loftcoin.databinding.ActivityWelcomeBinding;
 

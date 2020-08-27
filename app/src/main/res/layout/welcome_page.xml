@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
         android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/welcome_page_1" />
+        tools:src="@drawable/asset1" />
 
     <TextView
         android:id="@+id/title"
