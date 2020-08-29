@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import com.kpetrov.loftcoin.activity.ui.main.MainActivity;
-import com.kpetrov.loftcoin.activity.ui.widget.CircleIndicator;
+import com.kpetrov.loftcoin.activity.widget.CircleIndicator;
 import com.kpetrov.loftcoin.databinding.ActivityWelcomeBinding;
 
 public class WelcomeActivity extends AppCompatActivity {

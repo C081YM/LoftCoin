@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.widget;
+package com.kpetrov.loftcoin.activity.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CircleIndicator extends RecyclerView.ItemDecoration {
 
     private final Paint inactivePaint = new Paint();
+
     private final Paint activePaint = new Paint();
+
     private final float indicatorRadius;
 
-    public CircleIndicator (@NonNull Context context) {
-        final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    public CircleIndicator(@NonNull Context context) {
+        final DisplayMetrics dm = context.getResources().getDisplayMetrics();
 
-        indicatorRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, displayMetrics);
+        indicatorRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, dm);
 
         inactivePaint.setStyle(Paint.Style.FILL);
         inactivePaint.setColor(0x44ffffff);
@@ -31,18 +33,16 @@ public class CircleIndicator extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final RecyclerView.Adapter<?> adapter = parent.getAdapter();
-
         if (adapter != null) {
             float totalWidth = 2 * indicatorRadius * adapter.getItemCount();
             float posX = (parent.getWidth() - totalWidth) / 2f;
-            float posY = parent.getHeight() - 10 * indicatorRadius;
-            final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+            float posY = parent.getHeight() - 2 * indicatorRadius;
+            final RecyclerView.LayoutManager lm = parent.getLayoutManager();
             int currentIndicator = RecyclerView.NO_POSITION;
-
-            if (layoutManager instanceof LinearLayoutManager) {
-                currentIndicator = ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+            if (lm instanceof LinearLayoutManager) {
+                currentIndicator = ((LinearLayoutManager) lm).findFirstCompletelyVisibleItemPosition();
             }
             for (int i = 0; i < adapter.getItemCount(); ++i) {
                 drawIndicator(c, posX + 4 * indicatorRadius * i, posY, currentIndicator == i);
@@ -50,7 +50,8 @@ public class CircleIndicator extends RecyclerView.ItemDecoration {
         }
     }
 
-    private void drawIndicator (@NonNull Canvas c, float x, float y, boolean active) {
+    private void drawIndicator(@NonNull Canvas c, float x, float y, boolean active) {
         c.drawCircle(x, y, indicatorRadius, active ? activePaint : inactivePaint);
     }
+
 }
