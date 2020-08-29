@@ -38,7 +38,7 @@ public class CircleIndicator extends RecyclerView.ItemDecoration {
         if (adapter != null) {
             float totalWidth = 2 * indicatorRadius * adapter.getItemCount();
             float posX = (parent.getWidth() - totalWidth) / 2f;
-            float posY = parent.getHeight() - 2 * indicatorRadius;
+            float posY = parent.getHeight() - 8 * indicatorRadius;
             final RecyclerView.LayoutManager lm = parent.getLayoutManager();
             int currentIndicator = RecyclerView.NO_POSITION;
             if (lm instanceof LinearLayoutManager) {
