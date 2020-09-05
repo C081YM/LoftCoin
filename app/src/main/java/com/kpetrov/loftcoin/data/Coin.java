@@ -3,7 +3,6 @@ package com.kpetrov.loftcoin.data;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
 import com.squareup.moshi.Json;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -34,7 +33,6 @@ public abstract class Coin {
 
     abstract Map<String, AutoValue_Coin_Quote> quote();
 
-
     @AutoValue
     abstract static class Quote {
         public abstract double price ();
@@ -43,5 +41,4 @@ public abstract class Coin {
         @AutoValue.CopyAnnotations
         public abstract double change24h();
     }
-
 }

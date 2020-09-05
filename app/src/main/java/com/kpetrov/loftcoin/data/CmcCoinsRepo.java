@@ -1,14 +1,11 @@
 package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
-
 import com.kpetrov.loftcoin.BuildConfig;
 import com.squareup.moshi.Moshi;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -73,5 +70,4 @@ public class CmcCoinsRepo implements CoinsRepo {
         ));
         return builder.build();
     }
-
 }

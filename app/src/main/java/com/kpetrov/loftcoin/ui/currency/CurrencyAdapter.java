@@ -2,15 +2,12 @@ package com.kpetrov.loftcoin.ui.currency;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.kpetrov.loftcoin.data.Currency;
 import com.kpetrov.loftcoin.databinding.LiCurrencyBinding;
-
 import java.util.Objects;
 
 public class CurrencyAdapter extends ListAdapter<Currency, CurrencyAdapter.ViewHolder> {
@@ -19,6 +16,7 @@ public class CurrencyAdapter extends ListAdapter<Currency, CurrencyAdapter.ViewH
 
     CurrencyAdapter() {
         super(new DiffUtil.ItemCallback<Currency>() {
+
             @Override
             public boolean areItemsTheSame(@NonNull Currency oldItem, @NonNull Currency newItem) {
                 return Objects.equals(oldItem, newItem);
@@ -63,5 +61,4 @@ public class CurrencyAdapter extends ListAdapter<Currency, CurrencyAdapter.ViewH
             this.binding = binding;
         }
     }
-
 }

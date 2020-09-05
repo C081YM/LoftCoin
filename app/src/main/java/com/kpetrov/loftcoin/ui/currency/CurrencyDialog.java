@@ -15,12 +15,8 @@ import com.kpetrov.loftcoin.databinding.DialogCurrencyBinding;
 public class CurrencyDialog extends AppCompatDialogFragment {
 
     private DialogCurrencyBinding binding;
-
     private CurrencyRepo currencyRepo;
-
     private CurrencyAdapter adapter;
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +41,6 @@ public class CurrencyDialog extends AppCompatDialogFragment {
         binding.dialogCurrencyRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
         binding.dialogCurrencyRecycler.setAdapter(adapter);
         currencyRepo.availableCurrencies().observe(this, adapter::submitList);
-
     }
 
     @Override

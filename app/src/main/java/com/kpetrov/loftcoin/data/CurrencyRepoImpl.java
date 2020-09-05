@@ -1,16 +1,11 @@
 package com.kpetrov.loftcoin.data;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.preference.PreferenceManager;
 import com.kpetrov.loftcoin.R;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CurrencyRepoImpl implements CurrencyRepo {
 
@@ -54,6 +49,5 @@ public class CurrencyRepoImpl implements CurrencyRepo {
             currencies.add(Currency.create("₽", "RUB", context.getString(R.string.rub)));
             setValue(currencies);
         }
-
     }
 }

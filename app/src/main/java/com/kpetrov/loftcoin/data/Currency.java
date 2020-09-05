@@ -1,8 +1,6 @@
 package com.kpetrov.loftcoin.data;
 
-
 import androidx.annotation.NonNull;
-
 import com.google.auto.value.AutoValue;
 
 @AutoValue

@@ -2,7 +2,6 @@ package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
 public interface CurrencyRepo {

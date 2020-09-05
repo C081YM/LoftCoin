@@ -10,7 +10,6 @@ import com.kpetrov.loftcoin.databinding.LiWalletBinding;
 public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHolder> {
 
     private static final int [] WALLETS = {R.layout.li_wallet,R.layout.li_wallet,R.layout.li_wallet};
-
     private LayoutInflater inflater;
 
     @Override
@@ -26,7 +25,6 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
     }
 
     @Override
@@ -41,7 +39,5 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
             super(binding.getRoot());
             binding.getRoot().setClipToOutline(true);
         }
-
     }
-
 }

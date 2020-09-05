@@ -14,29 +14,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.kpetrov.loftcoin.R;
-import com.kpetrov.loftcoin.data.CurrencyRepo;
-import com.kpetrov.loftcoin.data.CurrencyRepoImpl;
 import com.kpetrov.loftcoin.util.PriceFormatter;
 import com.kpetrov.loftcoin.databinding.FragmentRateBinding;
-
 import timber.log.Timber;
 
 public class RateFragment extends Fragment {
 
     private FragmentRateBinding binding;
-
     private RateAdapter adapter;
-
     private RateViewModel viewModel;
-
-    private CurrencyRepo currencyRepo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(RateViewModel.class);
         adapter = new RateAdapter(new PriceFormatter());
-        currencyRepo = new CurrencyRepoImpl(requireContext());
     }
 
     @Nullable

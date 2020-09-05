@@ -2,7 +2,6 @@ package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-
 import java.io.IOException;
 import java.util.List;
 

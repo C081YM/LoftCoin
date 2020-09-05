@@ -22,17 +22,11 @@ import java.util.Objects;
 class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
 
     private final Formatter<Double> priceFormatter;
-
     private LayoutInflater inflater;
-
     private int colorNegative = Color.RED;
-
     private int colorPositive = Color.GREEN;
-
     private int colorBackgroundDark = Color.DKGRAY;
-
     private int colorBackgroundGray = Color.GRAY;
-
 
     protected RateAdapter(Formatter<Double> priceFormatter) {
         super(new DiffUtil.ItemCallback<Coin>() {
@@ -47,9 +41,7 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             }
         });
         this.priceFormatter = priceFormatter;
-
     }
-
 
     @NonNull
     @Override
@@ -63,6 +55,7 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         holder.binding.symbol.setText(coin.symbol());
         holder.binding.price.setText(priceFormatter.format(coin.price()));
         holder.binding.change.setText(String.format(Locale.US, "%.2f%%", coin.change24h()));
+
         if (coin.change24h() > 0) {
             holder.binding.change.setTextColor(colorPositive);
         } else {
@@ -109,5 +102,4 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             OutlineCircle.apply(binding.logo);
         }
     }
-
 }

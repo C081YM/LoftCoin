@@ -1,7 +1,6 @@
 package com.kpetrov.loftcoin.util;
 
 import android.os.Build;
-
 import androidx.annotation.NonNull;
 
 public class PriceFormatter implements Formatter<Double> {
@@ -15,6 +14,5 @@ public class PriceFormatter implements Formatter<Double> {
         } else {
             return java.text.NumberFormat.getCurrencyInstance().format(value);
         }
-
     }
 }
