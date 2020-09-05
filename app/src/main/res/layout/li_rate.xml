@@ -6,7 +6,7 @@
     android:layout_height="64dp" >
 
     <ImageView
-        android:id="@+id/ic_currency"
+        android:id="@+id/logo"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="@null"
@@ -14,21 +14,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_bitcoin" />
+        tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/txt_currency"
+        android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceHeadline3"
         android:textStyle="bold"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@id/ic_currency"
-        app:layout_constraintTop_toTopOf="@id/ic_currency"
-        tools:text="BTC" />
+        app:layout_constraintStart_toEndOf="@id/logo"
+        app:layout_constraintTop_toTopOf="@id/logo"
+        tools:text="@sample/coins.json/data/symbol" />
 
     <TextView
-        android:id="@+id/txt_price"
+        android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
@@ -38,17 +38,17 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="4 808,00 $" />
+        tools:text="@sample/coins.json/data/quote/USD/price" />
 
     <TextView
-        android:id="@+id/txt_change"
+        android:id="@+id/change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@id/txt_price"
-        app:layout_constraintTop_toBottomOf="@id/txt_price"
-        tools:text="+9.29 %" />
+        app:layout_constraintEnd_toEndOf="@id/price"
+        app:layout_constraintTop_toBottomOf="@id/price"
+        tools:text="@sample/coins.json/data/quote/USD/percent_change_24h" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

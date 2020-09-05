@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".activity.LoftApp"
+        android:name=".LoftApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ui.main.MainActivity"/>
-        <activity android:name=".activity.ui.welcome.WelcomeActivity"/>
+        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.welcome.WelcomeActivity"/>
     </application>
 
 </manifest>
