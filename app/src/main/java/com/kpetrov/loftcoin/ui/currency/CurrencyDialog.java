@@ -37,7 +37,7 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        binding = DialogCurrencyBinding.inflate(getLayoutInflater());
+        binding = DialogCurrencyBinding.inflate(requireActivity().getLayoutInflater());
         return new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(R.string.rate_menu_currency)
                 .setView(binding.getRoot())
@@ -47,24 +47,24 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.recycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        binding.recycler.setAdapter(adapter);
+        binding.dialogCurrencyRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        binding.dialogCurrencyRecycler.setAdapter(adapter);
         currencyRepo.availableCurrencies().observe(this, adapter::submitList);
-        onItemClick = new OnItemClick(binding.recycler.getContext(), (v) -> {
-            final RecyclerView.ViewHolder viewHolder = binding.recycler.findContainingViewHolder(v);
+        onItemClick = new OnItemClick(binding.dialogCurrencyRecycler.getContext(), (v) -> {
+            final RecyclerView.ViewHolder viewHolder = binding.dialogCurrencyRecycler.findContainingViewHolder(v);
             if (viewHolder != null) {
                 final Currency item = adapter.getItem(viewHolder.getAdapterPosition());
                 currencyRepo.updateCurrency(item);
             }
             dismissAllowingStateLoss();
         });
-        binding.recycler.addOnItemTouchListener(onItemClick);
+        binding.dialogCurrencyRecycler.addOnItemTouchListener(onItemClick);
     }
 
     @Override
     public void onDestroy() {
-        binding.recycler.removeOnItemTouchListener(onItemClick);
-        binding.recycler.setAdapter(null);
+        binding.dialogCurrencyRecycler.removeOnItemTouchListener(onItemClick);
+        binding.dialogCurrencyRecycler.setAdapter(null);
         super.onDestroy();
     }
 }

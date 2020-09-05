@@ -73,7 +73,7 @@ public class RateFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (R.id.currency_dialog == item.getItemId()) {
+        if (item.getItemId() == R.id.currency_dialog) {
             NavHostFragment
                     .findNavController(this)
                     .navigate(R.id.currency_dialog);

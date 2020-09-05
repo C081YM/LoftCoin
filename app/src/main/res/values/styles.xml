@@ -6,6 +6,11 @@
     <attr name="walletCardHeight" format="dimension|reference" />
     <attr name="textNegative" format="color|reference" />
     <attr name="textPositive" format="color|reference" />
+    <attr name="currencySymbolSize" format="dimension|reference"/>
+    <attr name="rateBackgroundDark" format="color|reference"/>
+    <attr name="rateBackgroundGray" format="color|reference"/>
+
+
 
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
 
@@ -37,6 +42,12 @@
         
         <item name="textNegative">@color/watermelon</item>
         <item name="textPositive">@color/weird_green</item>
+        
+        <item name="currencySymbolSize">40dp</item>
+
+        <item name="rateBackgroundDark">@color/dark_three</item>
+        <item name="rateBackgroundGray">@color/dark_two</item>
+
     </style>
 
     <style name="AppTheme.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">

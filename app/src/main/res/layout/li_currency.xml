@@ -14,8 +14,8 @@
 
     <TextView
         android:id="@+id/symbol"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="?attr/currencySymbolSize"
+        android:layout_height="?attr/currencySymbolSize"
         android:gravity="center"
         android:textAppearance="?attr/textAppearanceHeadline4"
         tools:text="$" />

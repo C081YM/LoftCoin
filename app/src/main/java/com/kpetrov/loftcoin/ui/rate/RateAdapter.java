@@ -29,7 +29,12 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
 
     private int colorPositive = Color.GREEN;
 
-    RateAdapter(Formatter<Double> priceFormatter) {
+    private int colorBackgroundDark = Color.DKGRAY;
+
+    private int colorBackgroundGray = Color.GRAY;
+
+
+    protected RateAdapter(Formatter<Double> priceFormatter) {
         super(new DiffUtil.ItemCallback<Coin>() {
             @Override
             public boolean areItemsTheSame(@NonNull Coin oldItem, @NonNull Coin newItem) {
@@ -42,13 +47,9 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             }
         });
         this.priceFormatter = priceFormatter;
-        setHasStableIds(true);
+
     }
 
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).id();
-    }
 
     @NonNull
     @Override
@@ -67,6 +68,13 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         } else {
             holder.binding.change.setTextColor(colorNegative);
         }
+
+        if (position %2 == 0) {
+            holder.binding.getRoot().setBackgroundColor(colorBackgroundGray);
+        } else {
+            holder.binding.getRoot().setBackgroundColor(colorBackgroundDark);
+        }
+
         Picasso.get()
                 .load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
                 .into(holder.binding.logo);
@@ -77,11 +85,18 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         super.onAttachedToRecyclerView(recyclerView);
         final Context context = recyclerView.getContext();
         inflater = LayoutInflater.from(context);
+
         TypedValue v = new TypedValue();
+
         context.getTheme().resolveAttribute(R.attr.textNegative, v, true);
         colorNegative = v.data;
         context.getTheme().resolveAttribute(R.attr.textPositive, v, true);
         colorPositive = v.data;
+
+        context.getTheme().resolveAttribute(R.attr.rateBackgroundDark, v, true);
+        colorBackgroundDark = v.data;
+        context.getTheme().resolveAttribute(R.attr.rateBackgroundGray, v, true);
+        colorBackgroundGray = v.data;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
