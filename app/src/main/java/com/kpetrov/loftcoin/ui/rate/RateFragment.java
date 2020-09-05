@@ -60,9 +60,8 @@ public class RateFragment extends Fragment {
 
         viewModel.coins().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.isRefreshing().observe(getViewLifecycleOwner(), binding.refresher::setRefreshing);
-        currencyRepo.currency().observe(getViewLifecycleOwner(), (currency -> {
-            Timber.d("%s", currency);
-        }));
+
+
     }
 
     @Override
@@ -73,6 +72,8 @@ public class RateFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Timber.d("%s", item);
+
         if (item.getItemId() == R.id.currency_dialog) {
             NavHostFragment
                     .findNavController(this)
