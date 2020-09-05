@@ -13,22 +13,23 @@ import com.kpetrov.loftcoin.BuildConfig;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.data.Coin;
 import com.kpetrov.loftcoin.util.Formatter;
+import com.kpetrov.loftcoin.util.LoaderImages;
 import com.kpetrov.loftcoin.util.OutlineCircle;
 import com.kpetrov.loftcoin.databinding.LiRateBinding;
-import com.squareup.picasso.Picasso;
-import java.util.Locale;
 import java.util.Objects;
 
 class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
 
     private final Formatter<Double> priceFormatter;
+    private final Formatter<Double> changeFormatter;
+    private LoaderImages loaderImages;
     private LayoutInflater inflater;
     private int colorNegative = Color.RED;
     private int colorPositive = Color.GREEN;
     private int colorBackgroundDark = Color.DKGRAY;
     private int colorBackgroundGray = Color.GRAY;
 
-    protected RateAdapter(Formatter<Double> priceFormatter) {
+    protected RateAdapter(Formatter<Double> priceFormatter, Formatter<Double> changeFormatter, LoaderImages loaderImages) {
         super(new DiffUtil.ItemCallback<Coin>() {
             @Override
             public boolean areItemsTheSame(@NonNull Coin oldItem, @NonNull Coin newItem) {
@@ -41,6 +42,8 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             }
         });
         this.priceFormatter = priceFormatter;
+        this.changeFormatter = changeFormatter;
+        this.loaderImages = loaderImages;
     }
 
     @NonNull
@@ -54,7 +57,7 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         final Coin coin = getItem(position);
         holder.binding.symbol.setText(coin.symbol());
         holder.binding.price.setText(priceFormatter.format(coin.price()));
-        holder.binding.change.setText(String.format(Locale.US, "%.2f%%", coin.change24h()));
+        holder.binding.change.setText(changeFormatter.format(coin.change24h()));
 
         if (coin.change24h() > 0) {
             holder.binding.change.setTextColor(colorPositive);
@@ -68,9 +71,7 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             holder.binding.getRoot().setBackgroundColor(colorBackgroundDark);
         }
 
-        Picasso.get()
-                .load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
-                .into(holder.binding.logo);
+        loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png", holder.binding.logo);
     }
 
     @Override

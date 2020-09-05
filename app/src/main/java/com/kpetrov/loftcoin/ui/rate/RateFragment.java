@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.kpetrov.loftcoin.R;
+import com.kpetrov.loftcoin.util.ChangeFormatter;
+import com.kpetrov.loftcoin.util.PicassoLoaderImages;
 import com.kpetrov.loftcoin.util.PriceFormatter;
 import com.kpetrov.loftcoin.databinding.FragmentRateBinding;
 import timber.log.Timber;
@@ -28,7 +30,7 @@ public class RateFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(RateViewModel.class);
-        adapter = new RateAdapter(new PriceFormatter());
+        adapter = new RateAdapter(new PriceFormatter(), new ChangeFormatter(), new PicassoLoaderImages());
     }
 
     @Nullable
