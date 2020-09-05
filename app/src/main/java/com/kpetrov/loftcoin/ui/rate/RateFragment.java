@@ -53,11 +53,16 @@ public class RateFragment extends Fragment {
         binding.recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         binding.recycler.swapAdapter(adapter, false);
         binding.recycler.setHasFixedSize(true);
+
+        binding.refresher.setOnRefreshListener(() -> {
+            viewModel.refresh();
+        });
+
         viewModel.coins().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.isRefreshing().observe(getViewLifecycleOwner(), binding.refresher::setRefreshing);
-        currencyRepo.currency().observe(getViewLifecycleOwner(), (currency) -> {
+        currencyRepo.currency().observe(getViewLifecycleOwner(), (currency -> {
             Timber.d("%s", currency);
-        });
+        }));
     }
 
     @Override
