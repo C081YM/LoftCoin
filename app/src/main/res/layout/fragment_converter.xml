@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:id="@+id/line_from"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_converter_item"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/txt_value_from"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:inputType="numberDecimal"
+            android:padding="16dp"
+            android:textAppearance="?attr/textAppearanceHeadline2"
+            tools:text="20,50"
+            android:text="20,50" />
+
+        <ImageView
+            android:id="@+id/ic_currency_from"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            tools:src="@drawable/ic_eth"
+            android:src="@drawable/ic_eth" />
+
+        <TextView
+            android:id="@+id/txt_currency_from"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_marginEnd="28dp"
+            android:gravity="center_vertical|end"
+            android:minEms="4"
+            android:textAppearance="?attr/textAppearanceHeadline4"
+            tools:text="ETH"
+            android:text="ETH"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line_to"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:background="@null"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/txt_value_to"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:inputType="numberDecimal"
+            android:padding="16dp"
+            android:textAppearance="?attr/textAppearanceHeadline2"
+            tools:text="1,29"
+            android:text="1,29"/>
+
+        <ImageView
+            android:id="@+id/ic_currency_to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            tools:src="@drawable/ic_bitcoin"
+            android:src="@drawable/ic_bitcoin"/>
+
+        <TextView
+            android:id="@+id/txt_currency_to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@null"
+            android:layout_marginEnd="28dp"
+            android:gravity="center_vertical|end"
+            android:minEms="4"
+            android:textAppearance="?attr/textAppearanceHeadline4"
+            tools:text="BTC"
+            android:text="BTC"/>
+    </LinearLayout>
+
+</LinearLayout>
