@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/fragment_navigation_rate"
         android:name="com.kpetrov.loftcoin.ui.rate.RateFragment"
-        android:label="@string/fragment_navigation_rate"
+        android:label="@string/rate_general_overview"
         tools:layout="@layout/fragment_rate" />
 
     <fragment
