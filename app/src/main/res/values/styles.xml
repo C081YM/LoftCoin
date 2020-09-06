@@ -45,7 +45,7 @@
         
         <item name="currencySymbolSize">40dp</item>
 
-        <item name="rateBackgroundDark">@color/dark_three</item>
+        <item name="rateBackgroundDark">?attr/colorPrimary</item>
         <item name="rateBackgroundGray">@color/dark_two</item>
 
     </style>
