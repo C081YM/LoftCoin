@@ -39,10 +39,10 @@
         <item name="walletCardBackground">@color/dark_five</item>
         <item name="walletCardWidth">240dp</item>
         <item name="walletCardHeight">160dp</item>
-        
+
         <item name="textNegative">@color/watermelon</item>
         <item name="textPositive">@color/weird_green</item>
-        
+
         <item name="currencySymbolSize">40dp</item>
 
         <item name="rateBackgroundDark">?attr/colorPrimary</item>
