@@ -10,26 +10,39 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.kpetrov.loftcoin.BaseComponent;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.util.ChangeFormatter;
 import com.kpetrov.loftcoin.util.PicassoLoaderImages;
 import com.kpetrov.loftcoin.util.PriceFormatter;
 import com.kpetrov.loftcoin.databinding.FragmentRateBinding;
+import javax.inject.Inject;
 import timber.log.Timber;
 
 public class RateFragment extends Fragment {
 
+    private final RateComponent component;
     private FragmentRateBinding binding;
     private RateAdapter adapter;
     private RateViewModel viewModel;
 
+    @Inject
+    public RateFragment(BaseComponent baseComponent) {
+        component = DaggerRateComponent.builder()
+                .baseComponent(baseComponent)
+                .build();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(RateViewModel.class);
+        viewModel = new ViewModelProvider(this, component.viewModelFactory())
+                .get(RateViewModel.class);
         adapter = new RateAdapter(new PriceFormatter(), new ChangeFormatter(), new PicassoLoaderImages());
     }
 

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.data.CurrencyRepo;
-import com.kpetrov.loftcoin.data.CurrencyRepoImpl;
 import com.kpetrov.loftcoin.databinding.DialogCurrencyBinding;
 
 public class CurrencyDialog extends AppCompatDialogFragment {
@@ -21,7 +20,7 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currencyRepo = new CurrencyRepoImpl(requireContext());
+        //currencyRepo = new CurrencyRepoImpl(requireContext());
         adapter = new CurrencyAdapter();
     }
 

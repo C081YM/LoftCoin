@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.kpetrov.loftcoin.data.CmcCoinsRepo;
 import com.kpetrov.loftcoin.data.Coin;
 import com.kpetrov.loftcoin.data.CoinsRepo;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +14,21 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
 public class RateViewModel extends ViewModel {
 
     private final MutableLiveData<List<Coin>> coins = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isRefreshing = new MutableLiveData<>();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final CoinsRepo repo;
+    private final CoinsRepo coinsRepo;
     private Future<?> future;
 
-    public RateViewModel() {
-        repo = new CmcCoinsRepo();
+    @Inject
+    public RateViewModel(CoinsRepo coinsRepo) {
+        this.coinsRepo = coinsRepo;
         refresh();
     }
 
@@ -41,10 +46,10 @@ public class RateViewModel extends ViewModel {
         isRefreshing.postValue(true);
         future = executor.submit(() -> {
             try {
-                coins.postValue(new ArrayList<>(repo.listings("USD")));
+                coins.postValue(new ArrayList<>(coinsRepo.listings("USD")));
                 isRefreshing.postValue(false);
             } catch (IOException e) {
-                e.printStackTrace();
+                Timber.e(e);
             }
         });
     }

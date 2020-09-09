@@ -7,11 +7,16 @@ import com.kpetrov.loftcoin.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrencyRepoImpl implements CurrencyRepo {
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
+class CurrencyRepoImpl implements CurrencyRepo {
 
     private final Context context;
 
-    public CurrencyRepoImpl(@NonNull Context context) {
+    @Inject
+    CurrencyRepoImpl(@NonNull Context context) {
         this.context = context;
     }
 
