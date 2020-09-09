@@ -8,14 +8,11 @@ import androidx.lifecycle.ViewModel;
 import com.kpetrov.loftcoin.data.Coin;
 import com.kpetrov.loftcoin.data.CoinsRepo;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.inject.Inject;
 
 public class RateViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isRefreshing = new MutableLiveData<>();
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final MutableLiveData<Boolean> forceRefresh = new MutableLiveData<>(false);
     private final LiveData<List<Coin>> coins;
 
