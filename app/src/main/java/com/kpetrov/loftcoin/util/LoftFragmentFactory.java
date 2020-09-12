@@ -3,12 +3,9 @@ package com.kpetrov.loftcoin.util;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentFactory;
-
 import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
-
 import timber.log.Timber;
 
 public class LoftFragmentFactory extends FragmentFactory {
@@ -18,7 +15,6 @@ public class LoftFragmentFactory extends FragmentFactory {
     @Inject
     LoftFragmentFactory(Map<Class<?>, Provider<Fragment>> providers) {
         this.providers = providers;
-
     }
 
     @NonNull

@@ -6,7 +6,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
 import java.util.List;
 
 @Dao
@@ -15,8 +14,17 @@ abstract class CoinsDao {
     @Query("SELECT * FROM RoomCoin")
     abstract LiveData<List<RoomCoin>> fetchAll();
 
+    @Query("SELECT * FROM RoomCoin ORDER BY price DESC")
+    abstract LiveData<List<RoomCoin>> fetchAllSortByPriceDesk();
+
+    @Query("SELECT * FROM RoomCoin ORDER BY price ASC")
+    abstract LiveData<List<RoomCoin>> fetchAllSortByPriceAsc();
+
+    @Query("SELECT * FROM RoomCoin ORDER BY rank ASC")
+    abstract LiveData<List<RoomCoin>> fetchAllSortByRank();
+
     @WorkerThread
-    @Query("SELECT COUNT(id) FROM RoomCoin")
+    @Query("SELECT COUNT (id) FROM RoomCoin")
     abstract int coinsCount();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

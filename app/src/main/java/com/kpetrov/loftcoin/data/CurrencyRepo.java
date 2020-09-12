@@ -13,5 +13,4 @@ public interface CurrencyRepo {
     LiveData<Currency> currency();
 
     void updateCurrency(@NonNull Currency currency);
-
 }

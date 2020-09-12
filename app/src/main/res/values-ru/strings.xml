@@ -14,8 +14,8 @@
     <string name="fragment_navigation_converter">Конвертер</string>
     <string name="rate_menu_currency">Выбор валюты</string>
     <string name="rate_menu_sort">Сортировать</string>
-    <string name="usd">Доллар</string>
-    <string name="eur">Евро</string>
-    <string name="rub">Рубль</string>
+    <string name="usd">Доллар | USD</string>
+    <string name="eur">Евро | EUR</string>
+    <string name="rub">Рубль | RUB</string>
 
 </resources>

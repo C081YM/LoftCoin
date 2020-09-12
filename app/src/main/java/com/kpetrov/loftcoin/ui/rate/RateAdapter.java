@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kpetrov.loftcoin.BuildConfig;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.data.Coin;
-import com.kpetrov.loftcoin.util.Formatter;
+import com.kpetrov.loftcoin.util.ChangeFormatter;
 import com.kpetrov.loftcoin.util.LoaderImages;
 import com.kpetrov.loftcoin.util.OutlineCircle;
 import com.kpetrov.loftcoin.databinding.LiRateBinding;
+import com.kpetrov.loftcoin.util.PriceFormatter;
+import java.util.List;
 import java.util.Objects;
+import javax.inject.Inject;
 
-class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
+public class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
 
-    private final Formatter<Double> priceFormatter;
-    private final Formatter<Double> changeFormatter;
+    private PriceFormatter priceFormatter;
+    private ChangeFormatter changeFormatter;
     private LoaderImages loaderImages;
     private LayoutInflater inflater;
     private int colorNegative = Color.RED;
@@ -29,7 +32,8 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
     private int colorBackgroundDark = Color.DKGRAY;
     private int colorBackgroundGray = Color.GRAY;
 
-    protected RateAdapter(Formatter<Double> priceFormatter, Formatter<Double> changeFormatter, LoaderImages loaderImages) {
+    @Inject
+    RateAdapter(PriceFormatter priceFormatter, ChangeFormatter changeFormatter, LoaderImages loaderImages) {
         super(new DiffUtil.ItemCallback<Coin>() {
             @Override
             public boolean areItemsTheSame(@NonNull Coin oldItem, @NonNull Coin newItem) {
@@ -39,6 +43,11 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             @Override
             public boolean areContentsTheSame(@NonNull Coin oldItem, @NonNull Coin newItem) {
                 return Objects.equals(oldItem, newItem);
+            }
+
+            @Override
+            public Object getChangePayload(@NonNull Coin oldItem, @NonNull Coin newItem) {
+                return newItem;
             }
         });
         this.priceFormatter = priceFormatter;
@@ -53,10 +62,23 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            Coin coin = (Coin) payloads.get(0);
+            holder.binding.price.setText(priceFormatter.format(coin.currencyCode(), coin.price()));
+            holder.binding.change.setText(changeFormatter.format(coin.change24h()));
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RateAdapter.ViewHolder holder, int position) {
+
         final Coin coin = getItem(position);
+
         holder.binding.symbol.setText(coin.symbol());
-        holder.binding.price.setText(priceFormatter.format(coin.price()));
+        holder.binding.price.setText(priceFormatter.format(coin.currencyCode(), coin.price()));
         holder.binding.change.setText(changeFormatter.format(coin.change24h()));
 
         if (coin.change24h() > 0) {
@@ -71,13 +93,14 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
             holder.binding.getRoot().setBackgroundColor(colorBackgroundDark);
         }
 
-        loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png", holder.binding.logo);
+        loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
+                 .into(holder.binding.logo);
     }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        final Context context = recyclerView.getContext();
+        Context context = recyclerView.getContext();
         inflater = LayoutInflater.from(context);
 
         TypedValue v = new TypedValue();
@@ -95,9 +118,9 @@ class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final LiRateBinding binding;
+        LiRateBinding binding;
 
-        public ViewHolder(@NonNull LiRateBinding binding) {
+        ViewHolder(@NonNull LiRateBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             OutlineCircle.apply(binding.logo);

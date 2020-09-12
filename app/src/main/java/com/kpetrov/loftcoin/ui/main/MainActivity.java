@@ -1,33 +1,22 @@
 package com.kpetrov.loftcoin.ui.main;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentFactory;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import android.content.Context;
 import android.os.Bundle;
-
 import com.kpetrov.loftcoin.BaseComponent;
 import com.kpetrov.loftcoin.LoftApp;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.ActivityMainBinding;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
-import javax.inject.Provider;
-
 
 public class MainActivity extends AppCompatActivity {
 
    private MainComponent component;
-
 
     @Inject FragmentFactory fragmentFactory;
 
@@ -52,5 +41,4 @@ public class MainActivity extends AppCompatActivity {
                 .Builder(binding.bottomNav.getMenu())
                 .build());
     }
-
 }

@@ -14,8 +14,8 @@
     <string name="fragment_navigation_converter">Converter</string>
     <string name="rate_menu_currency">Currency selection</string>
     <string name="rate_menu_sort">Sort</string>
-    <string name="usd">Dollar</string>
-    <string name="eur">Euro</string>
-    <string name="rub">Rouble</string>
+    <string name="usd">Dollar | USD</string>
+    <string name="eur">Euro | EUR</string>
+    <string name="rub">Rouble | RUB</string>
 
 </resources>

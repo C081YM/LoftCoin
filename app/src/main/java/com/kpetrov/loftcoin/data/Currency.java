@@ -12,9 +12,6 @@ public abstract class Currency {
     }
 
     public abstract String symbol();
-
     public abstract String code();
-
     public abstract String name();
-
 }

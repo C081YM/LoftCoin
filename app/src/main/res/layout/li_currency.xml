@@ -10,15 +10,16 @@
     android:minHeight="?attr/listPreferredItemHeightSmall"
     android:orientation="horizontal"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp">
+    android:paddingEnd="16dp" >
 
     <TextView
         android:id="@+id/symbol"
         android:layout_width="?attr/currencySymbolSize"
         android:layout_height="?attr/currencySymbolSize"
         android:gravity="center"
-        android:textAppearance="?attr/textAppearanceHeadline4"
-        tools:text="$" />
+        android:textAppearance="?attr/textAppearanceHeadline3"
+        tools:text="$"
+        android:background="@drawable/bg_currency_symbol"/>
 
     <TextView
         android:id="@+id/name"

@@ -2,15 +2,11 @@ package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import okhttp3.ResponseBody;
@@ -33,75 +29,63 @@ class CmcCoinsRepo implements CoinsRepo {
 
     @NonNull
     @Override
-    public List<? extends Coin> listings(@NonNull String currency) throws IOException {
-        final Response<Listings> response = api.listings(currency).execute();
-        if (response.isSuccessful()) {
-            final Listings listings = response.body();
-            if (listings != null) {
-                return  listings.data();
-            }
-        } else {
-            final ResponseBody responseBody = response.errorBody();
-            if (responseBody != null) {
-                throw  new IOException(responseBody.string());
-            }
-        }
-        return Collections.emptyList();
-    }
-
-    @NonNull
-    @Override
     public LiveData<List<Coin>> listings(@NonNull Query query) {
-        final MutableLiveData<Boolean> refresh = new MutableLiveData<>();
-        executor.submit(() -> refresh.postValue(query.forceUpdate() || db.coins().coinsCount() == 0));
-        return Transformations.switchMap(refresh, (r) -> {
-            if (r) return fetchFromNetwork(query);
-            else return fetchFromDb(query);
-        });
+        fetchFromNetworkIfNecessary(query);
+
+        return fetchFromDb(query);
     }
 
     private LiveData<List<Coin>> fetchFromDb(Query query) {
-        return Transformations.map(db.coins().fetchAll(), ArrayList::new);
+
+        LiveData<List<RoomCoin>> coins;
+
+        if (query.sorting() == Sorting.PRICE_DESK) {
+            coins =  db.coins().fetchAllSortByPriceDesk();
+        } else {
+            coins =  db.coins().fetchAllSortByPriceAsc();
+        }
+
+        return Transformations.map(coins, (c) -> new ArrayList<>(c));
     }
 
-    private LiveData<List<Coin>> fetchFromNetwork(Query query) {
-        final MutableLiveData<List<Coin>> liveData = new MutableLiveData<>();
+    private void fetchFromNetworkIfNecessary(Query query) {
         executor.submit(() -> {
-            try {
-                final Response<Listings> response = api.listings(query.currency()).execute();
-                if (response.isSuccessful()) {
-                    final Listings listings = response.body();
-                    if (listings != null) {
-                        final List<AutoValue_CmcCoin> cmcCoins = listings.data();
-                        saveCoinsIntoDb(cmcCoins);
-                        liveData.postValue(new ArrayList<>(cmcCoins));
+            if(query.forceUpdate() || db.coins().coinsCount() == 0) {
+                try {
+                    final Response<Listings> response = api.listings(query.currency()).execute();
+                    if (response.isSuccessful()) {
+                        final Listings listings = response.body();
+                        if (listings != null) {
+                            saveCoinsIntoDb(query, listings.data());
+                        }
+                    } else {
+                        final ResponseBody responseBody = response.errorBody();
+                        if (responseBody != null) {
+                            throw new IOException(responseBody.string());
+                        }
                     }
-                } else {
-                    final ResponseBody responseBody = response.errorBody();
-                    if (responseBody != null) {
-                        throw  new IOException(responseBody.string());
-                    }
+                } catch (IOException e) {
+                    Timber.e(e);
                 }
-            } catch (IOException e) {
-                Timber.e(e);
             }
         });
-        return liveData;
     }
 
-    private void saveCoinsIntoDb(List<? extends Coin> coins) {
+    private void saveCoinsIntoDb(Query query, List<? extends Coin> coins) {
         List<RoomCoin> roomCoins = new ArrayList<>(coins.size());
         for (Coin coin : coins) {
-            roomCoins.add(RoomCoin.create(
-                    coin.name(),
-                    coin.symbol(),
-                    coin.rank(),
-                    coin.price(),
-                    coin.change24h(),
-                    coin.id()
-            ));
+            roomCoins.add(
+                    RoomCoin.create(
+                            coin.name(),
+                            coin.symbol(),
+                            coin.rank(),
+                            coin.price(),
+                            coin.change24h(),
+                            query.currency(),
+                            coin.id()
+                    )
+            );
         }
         db.coins().insert(roomCoins);
     }
-
 }

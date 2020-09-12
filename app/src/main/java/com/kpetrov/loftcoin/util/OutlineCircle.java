@@ -3,7 +3,6 @@ package com.kpetrov.loftcoin.util;
 import android.graphics.Outline;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-
 import androidx.annotation.NonNull;
 
 public class OutlineCircle  extends ViewOutlineProvider {
@@ -24,5 +23,4 @@ public class OutlineCircle  extends ViewOutlineProvider {
         int minSize = Math.min(view.getWidth(), view.getHeight());
         outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), minSize / 2f);
     }
-
 }

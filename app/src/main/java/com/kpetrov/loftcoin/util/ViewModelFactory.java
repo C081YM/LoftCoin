@@ -3,9 +3,7 @@ package com.kpetrov.loftcoin.util;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-
 import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
 
