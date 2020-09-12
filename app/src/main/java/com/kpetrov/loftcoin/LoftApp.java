@@ -1,9 +1,11 @@
-package com.kpetrov.loftcoin.activity;
+package com.kpetrov.loftcoin;
 
 import android.app.Application;
 import android.os.StrictMode;
 
-import com.kpetrov.loftcoin.BuildConfig;
+import com.kpetrov.loftcoin.util.DebugTree;
+
+import timber.log.Timber;
 
 public class LoftApp extends Application {
 
@@ -12,6 +14,8 @@ public class LoftApp extends Application {
         super.onCreate();
         if (BuildConfig.DEBUG) {
             StrictMode.enableDefaults();
+            Timber.plant(new DebugTree());
+            //Timber.plant(new Timber.DebugTree());
         }
     }
 }

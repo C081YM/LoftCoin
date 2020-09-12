@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.welcome;
+package com.kpetrov.loftcoin.ui.welcome;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,9 +10,7 @@ import com.kpetrov.loftcoin.databinding.WelcomePageBinding;
 public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHolder> {
 
     private static final int[] IMAGES = {R.drawable.asset1, R.drawable.asset2, R.drawable.asset3,};
-
     private static final int[] TITLES = {R.string.welcome_page_1_title, R.string.welcome_page_2_title, R.string.welcome_page_3_title,};
-
     private static final int[] SUBTITLES = {R.string.welcome_page_1_subtitle, R.string.welcome_page_2_subtitle, R.string.welcome_page_3_subtitle,};
 
     private LayoutInflater inflater;

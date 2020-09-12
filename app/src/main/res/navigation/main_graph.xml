@@ -3,24 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/fragment_navigation_wallets" >
+    app:startDestination="@id/fragment_navigation_wallets">
 
     <fragment
         android:id="@+id/fragment_navigation_wallets"
-        android:name="com.kpetrov.loftcoin.activity.ui.wallets.WalletsFragment"
+        android:name="com.kpetrov.loftcoin.ui.wallets.WalletsFragment"
         android:label="@string/fragment_navigation_wallets"
         tools:layout="@layout/fragment_wallets" />
 
     <fragment
         android:id="@+id/fragment_navigation_rate"
-        android:name="com.kpetrov.loftcoin.activity.ui.rate.RateFragment"
-        android:label="@string/fragment_navigation_rate"
+        android:name="com.kpetrov.loftcoin.ui.rate.RateFragment"
+        android:label="@string/rate_general_overview"
         tools:layout="@layout/fragment_rate" />
 
     <fragment
         android:id="@+id/fragment_navigation_converter"
-        android:name="com.kpetrov.loftcoin.activity.ui.converter.ConverterFragment"
+        android:name="com.kpetrov.loftcoin.ui.converter.ConverterFragment"
         android:label="@string/fragment_navigation_converter"
         tools:layout="@layout/fragment_converter" />
+
+    <dialog
+        android:id="@+id/currency_dialog"
+        android:name="com.kpetrov.loftcoin.ui.currency.CurrencyDialog"
+        android:label="CurrencyDialog"
+        tools:layout="@layout/dialog_currency"/>
 
 </navigation>

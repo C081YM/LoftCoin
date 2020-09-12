@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.main;
+package com.kpetrov.loftcoin.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -24,4 +24,5 @@ public class MainActivity extends AppCompatActivity {
                 .Builder(binding.bottomNav.getMenu())
                 .build());
     }
+
 }

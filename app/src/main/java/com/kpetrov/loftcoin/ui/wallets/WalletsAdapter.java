@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.wallets;
+package com.kpetrov.loftcoin.ui.wallets;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,8 +10,7 @@ import com.kpetrov.loftcoin.databinding.LiWalletBinding;
 public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHolder> {
 
     private static final int [] WALLETS = {R.layout.li_wallet,R.layout.li_wallet,R.layout.li_wallet};
-
-    private LayoutInflater layoutInflater;
+    private LayoutInflater inflater;
 
     @Override
     public int getItemCount() {
@@ -21,7 +20,7 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LiWalletBinding.inflate(layoutInflater, parent, false));
+        return new ViewHolder(LiWalletBinding.inflate(inflater, parent, false));
     }
 
     @Override
@@ -31,13 +30,14 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        layoutInflater = LayoutInflater.from(recyclerView.getContext());
+        inflater = LayoutInflater.from(recyclerView.getContext());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+
         ViewHolder(@NonNull LiWalletBinding binding) {
             super(binding.getRoot());
-
+            binding.getRoot().setClipToOutline(true);
         }
     }
 }

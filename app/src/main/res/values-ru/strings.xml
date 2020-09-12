@@ -10,6 +10,12 @@
     <string name="start_working">начать работу</string>
     <string name="fragment_navigation_wallets">Кошельки</string>
     <string name="fragment_navigation_rate">Курс</string>
+    <string name="rate_general_overview">Общий анализ</string>
     <string name="fragment_navigation_converter">Конвертер</string>
+    <string name="rate_menu_currency">Выбор валюты</string>
+    <string name="rate_menu_sort">Сортировать</string>
+    <string name="usd">Доллар</string>
+    <string name="eur">Евро</string>
+    <string name="rub">Рубль</string>
 
 </resources>

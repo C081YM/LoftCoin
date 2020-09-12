@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.welcome;
+package com.kpetrov.loftcoin.ui.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import com.kpetrov.loftcoin.activity.ui.main.MainActivity;
-import com.kpetrov.loftcoin.activity.widget.CircleIndicator;
+import com.kpetrov.loftcoin.ui.main.MainActivity;
+import com.kpetrov.loftcoin.widget.CircleIndicator;
 import com.kpetrov.loftcoin.databinding.ActivityWelcomeBinding;
 
 public class WelcomeActivity extends AppCompatActivity {

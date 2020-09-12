@@ -10,6 +10,12 @@
     <string name="start_working">get started</string>
     <string name="fragment_navigation_wallets">Wallets</string>
     <string name="fragment_navigation_rate">Rate</string>
+    <string name="rate_general_overview">General overview</string>
     <string name="fragment_navigation_converter">Converter</string>
+    <string name="rate_menu_currency">Currency selection</string>
+    <string name="rate_menu_sort">Sort</string>
+    <string name="usd">Dollar</string>
+    <string name="eur">Euro</string>
+    <string name="rub">Rouble</string>
 
 </resources>

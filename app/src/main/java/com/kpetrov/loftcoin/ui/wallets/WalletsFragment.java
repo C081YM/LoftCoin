@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.ui.wallets;
+package com.kpetrov.loftcoin.ui.wallets;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -66,5 +66,4 @@ public class WalletsFragment extends Fragment {
             }
         }
     }
-
 }

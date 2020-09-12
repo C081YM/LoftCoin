@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.activity.widget;
+package com.kpetrov.loftcoin.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CircleIndicator extends RecyclerView.ItemDecoration {
 
     private final Paint inactivePaint = new Paint();
-
     private final Paint activePaint = new Paint();
-
     private final float indicatorRadius;
 
     public CircleIndicator(@NonNull Context context) {
