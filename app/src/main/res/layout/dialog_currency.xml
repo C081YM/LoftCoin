@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:listitem="@layout/li_currency" />
+    tools:listitem="@layout/li_currency"/>
 

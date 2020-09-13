@@ -13,24 +13,35 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.kpetrov.loftcoin.BaseComponent;
 import com.kpetrov.loftcoin.R;
-import com.kpetrov.loftcoin.util.ChangeFormatter;
-import com.kpetrov.loftcoin.util.PicassoLoaderImages;
-import com.kpetrov.loftcoin.util.PriceFormatter;
 import com.kpetrov.loftcoin.databinding.FragmentRateBinding;
-import timber.log.Timber;
+import javax.inject.Inject;
 
 public class RateFragment extends Fragment {
 
+    private final RateComponent component;
     private FragmentRateBinding binding;
     private RateAdapter adapter;
     private RateViewModel viewModel;
 
+    @Inject
+    RateFragment(BaseComponent baseComponent) {
+        component = DaggerRateComponent.builder()
+                .baseComponent(baseComponent)
+                .build();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(RateViewModel.class);
-        adapter = new RateAdapter(new PriceFormatter(), new ChangeFormatter(), new PicassoLoaderImages());
+        viewModel = new ViewModelProvider(this, component.viewModelFactory())
+                .get(RateViewModel.class);
+
+        adapter = component.rateAdapter();
+
+        adapter.registerAdapterDataObserver(dataObserver);
     }
 
     @Nullable
@@ -54,8 +65,6 @@ public class RateFragment extends Fragment {
 
         viewModel.coins().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.isRefreshing().observe(getViewLifecycleOwner(), binding.refresher::setRefreshing);
-
-
     }
 
     @Override
@@ -66,12 +75,14 @@ public class RateFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Timber.d("%s", item);
 
         if (item.getItemId() == R.id.currency_dialog) {
             NavHostFragment
                     .findNavController(this)
                     .navigate(R.id.currency_dialog);
+            return true;
+        } else if (item.getItemId() == R.id.sort) {
+            viewModel.switchSortingOrder();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -80,7 +91,39 @@ public class RateFragment extends Fragment {
     @Override
     public void onDestroyView() {
         binding.recycler.swapAdapter(null, false);
+        adapter.unregisterAdapterDataObserver(dataObserver);
         super.onDestroyView();
     }
 
+    private RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            binding.recycler.scrollToPosition(0);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
+            binding.recycler.scrollToPosition(0);
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+    };
 }

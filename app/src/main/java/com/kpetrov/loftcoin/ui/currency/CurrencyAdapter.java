@@ -54,7 +54,7 @@ public class CurrencyAdapter extends ListAdapter<Currency, CurrencyAdapter.ViewH
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private final LiCurrencyBinding binding;
+        LiCurrencyBinding binding;
 
         ViewHolder(@NonNull LiCurrencyBinding binding) {
             super(binding.getRoot());

@@ -8,8 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.kpetrov.loftcoin.R;
+import javax.inject.Inject;
 
 public class ConverterFragment extends Fragment {
+
+    @Inject
+    public ConverterFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
