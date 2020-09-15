@@ -1,91 +1,63 @@
 package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
-import java.io.IOException;
+import com.kpetrov.loftcoin.util.RxSchedulers;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
-import timber.log.Timber;
+import io.reactivex.Observable;
 
 @Singleton
 class CmcCoinsRepo implements CoinsRepo {
 
     private final CmcApi api;
     private final LoftDatabase db;
-    private ExecutorService executor;
+    private final RxSchedulers schedulers;
 
     @Inject
-    public CmcCoinsRepo(CmcApi api, LoftDatabase db, ExecutorService executor) {
+    public CmcCoinsRepo(CmcApi api, LoftDatabase db, RxSchedulers schedulers) {
         this.api = api;
         this.db = db;
-        this.executor = executor;
+        this.schedulers = schedulers;
     }
 
     @NonNull
     @Override
-    public LiveData<List<Coin>> listings(@NonNull Query query) {
-        fetchFromNetworkIfNecessary(query);
-
-        return fetchFromDb(query);
+    public Observable<List<Coin>> listings(@NonNull Query query) {
+         return Observable
+            .fromCallable(() -> query.forceUpdate() || db.coins().coinsCount() == 0)
+            .switchMap((f) -> f ? api.listings(query.currency()) : Observable.empty())
+            .map((listings) ->  mapToRoomCoins(query, listings.data()))
+            .doOnNext((coins) -> db.coins().insert(coins))
+            .switchMap((coins) -> fetchFromDb(query))
+            .switchIfEmpty(fetchFromDb(query))
+            .<List<Coin>>map(ArrayList::new)
+            .subscribeOn(schedulers.io())
+        ;
     }
 
-    private LiveData<List<Coin>> fetchFromDb(Query query) {
-
-        LiveData<List<RoomCoin>> coins;
-
+    private Observable<List<RoomCoin>> fetchFromDb(Query query) {
         if (query.sorting() == Sorting.PRICE_DESK) {
-            coins =  db.coins().fetchAllSortByPriceDesk();
+            return db.coins().fetchAllSortByPriceDesk();
         } else {
-            coins =  db.coins().fetchAllSortByPriceAsc();
+            return db.coins().fetchAllSortByPriceAsc();
         }
-
-        return Transformations.map(coins, (c) -> new ArrayList<>(c));
     }
 
-    private void fetchFromNetworkIfNecessary(Query query) {
-        executor.submit(() -> {
-            if(query.forceUpdate() || db.coins().coinsCount() == 0) {
-                try {
-                    final Response<Listings> response = api.listings(query.currency()).execute();
-                    if (response.isSuccessful()) {
-                        final Listings listings = response.body();
-                        if (listings != null) {
-                            saveCoinsIntoDb(query, listings.data());
-                        }
-                    } else {
-                        final ResponseBody responseBody = response.errorBody();
-                        if (responseBody != null) {
-                            throw new IOException(responseBody.string());
-                        }
-                    }
-                } catch (IOException e) {
-                    Timber.e(e);
-                }
-            }
-        });
-    }
-
-    private void saveCoinsIntoDb(Query query, List<? extends Coin> coins) {
-        List<RoomCoin> roomCoins = new ArrayList<>(coins.size());
-        for (Coin coin : coins) {
-            roomCoins.add(
-                    RoomCoin.create(
-                            coin.name(),
-                            coin.symbol(),
-                            coin.rank(),
-                            coin.price(),
-                            coin.change24h(),
-                            query.currency(),
-                            coin.id()
-                    )
-            );
+    private List<RoomCoin> mapToRoomCoins (Query query, List<? extends Coin> data) {
+        List<RoomCoin> roomCoins = new ArrayList<>(data.size());
+        for (Coin coin : data) {
+            roomCoins.add(RoomCoin.create(
+                    coin.name(),
+                    coin.symbol(),
+                    coin.rank(),
+                    coin.price(),
+                    coin.change24h(),
+                    query.currency(),
+                    coin.id()
+            ));
         }
-        db.coins().insert(roomCoins);
+        return roomCoins;
     }
 }
