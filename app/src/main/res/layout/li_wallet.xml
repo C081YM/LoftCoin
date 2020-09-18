@@ -39,8 +39,7 @@
         android:textAppearance="?attr/textAppearanceHeadline4"
         app:layout_constraintStart_toEndOf="@id/ic_bitcoin"
         app:layout_constraintTop_toTopOf="@id/ic_bitcoin"
-        tools:text="BTC"
-        android:text="BTC"/>
+        tools:text="BTC" />
 
     <TextView
         android:id="@+id/txt_card_main"
@@ -51,8 +50,7 @@
         android:textAppearance="?attr/textAppearanceHeadline3"
         app:layout_constraintBottom_toTopOf="@id/txt_card_secondary"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2.77744 BTC"
-        android:text="2.77744 BTC"/>
+        tools:text="2.77744 BTC" />
 
     <TextView
         android:id="@+id/txt_card_secondary"
@@ -64,7 +62,6 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2.77744 $"
-        android:text="2.77744 $"/>
+        tools:text="2.77744 $" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

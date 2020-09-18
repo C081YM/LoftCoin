@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import com.google.auto.value.AutoValue;
 import java.util.List;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface CoinsRepo {
 
     @NonNull
     Observable<List<Coin>> listings(@NonNull Query query);
+
+    @NonNull
+    Single<Coin> coin(Currency currency, long id);
 
     @AutoValue
     abstract class Query {
@@ -16,7 +20,8 @@ public interface CoinsRepo {
         @NonNull
         public static Builder builder() {
             return new AutoValue_CoinsRepo_Query.Builder()
-                    .forceUpdate(true);
+                    .forceUpdate(true)
+                    .sorting(Sorting.RANK);
         }
 
         abstract String currency();

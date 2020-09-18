@@ -18,4 +18,6 @@
     <string name="eur">Евро | EUR</string>
     <string name="rub">Рубль | RUB</string>
 
+    <string name="default_channel_name">@string/app_name</string>
+
 </resources>

@@ -64,4 +64,7 @@ public abstract class DataModule {
 
     @Binds
     abstract CurrencyRepo currencyRepo(CurrencyRepoImpl impl);
+
+    @Binds
+    abstract WalletsRepo walletsRepo(WalletsRepoImpl impl);
 }

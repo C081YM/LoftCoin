@@ -18,7 +18,7 @@ public class RateViewModel extends ViewModel {
 
     private final Subject<Boolean> isRefreshing = BehaviorSubject.create();
     private final Subject<Class<?>> pullToRefresh = BehaviorSubject.createDefault(Void.TYPE);
-    private final Subject<Sorting> sorting = BehaviorSubject.createDefault(Sorting.PRICE_DESK);
+    private final Subject<Sorting> sorting = BehaviorSubject.createDefault(Sorting.RANK);
     private final AtomicBoolean forceUpdate = new AtomicBoolean();
     private final Observable<List<Coin>> coins;
     private final RxSchedulers schedulers;

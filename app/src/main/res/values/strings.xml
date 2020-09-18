@@ -18,4 +18,7 @@
     <string name="eur">Euro | EUR</string>
     <string name="rub">Rouble | RUB</string>
 
+    <string name="default_channel_id" translatable="false">default_channel</string>
+    <string name="default_channel_name">@string/app_name</string>
+
 </resources>

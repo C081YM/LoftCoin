@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import java.util.List;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 abstract class CoinsDao {
@@ -15,13 +16,13 @@ abstract class CoinsDao {
     abstract Observable<List<RoomCoin>> fetchAll();
 
     @Query("SELECT * FROM RoomCoin ORDER BY price DESC")
-    abstract Observable<List<RoomCoin>> fetchAllSortByPriceDesk();
-
-    @Query("SELECT * FROM RoomCoin ORDER BY price ASC")
-    abstract Observable<List<RoomCoin>> fetchAllSortByPriceAsc();
+    abstract Observable<List<RoomCoin>> fetchAllSortByPrice();
 
     @Query("SELECT * FROM RoomCoin ORDER BY rank ASC")
     abstract Observable<List<RoomCoin>> fetchAllSortByRank();
+
+    @Query("SELECT * FROM RoomCoin WHERE id=:id")
+    abstract Single<RoomCoin> fetchOne(long id);
 
     @WorkerThread
     @Query("SELECT COUNT (id) FROM RoomCoin")

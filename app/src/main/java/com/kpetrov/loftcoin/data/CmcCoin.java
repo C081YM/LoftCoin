@@ -38,6 +38,7 @@ public abstract class CmcCoin implements Coin {
 
     @AutoValue
     abstract static class Quote {
+
         public abstract double price ();
 
         @Json(name = "percent_change_24h")
