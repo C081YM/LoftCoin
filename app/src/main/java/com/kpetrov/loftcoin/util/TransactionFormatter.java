@@ -1,7 +1,7 @@
 package com.kpetrov.loftcoin.util;
 
 import androidx.annotation.NonNull;
-import com.kpetrov.loftcoin.data.Wallet;
+import com.kpetrov.loftcoin.data.Transaction;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -11,15 +11,15 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class BalanceFormatter implements Formatter<Wallet> {
+public class TransactionFormatter implements Formatter<Transaction> {
 
     @Inject
-    BalanceFormatter() {
+    TransactionFormatter(){
     }
 
     @NonNull
     @Override
-    public String format(@NonNull Wallet value) {
+    public String format(@NonNull Transaction value) {
 
         final DecimalFormat format = (DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("ru", "RU"));
 
@@ -28,7 +28,7 @@ public class BalanceFormatter implements Formatter<Wallet> {
         symbols.setCurrencySymbol(value.coin().symbol());
         format.setDecimalFormatSymbols(symbols);
 
-        return format.format(value.balance());
-
+        return format.format(value.amount());
     }
+
 }
