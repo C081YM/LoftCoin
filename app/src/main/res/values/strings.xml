@@ -21,6 +21,6 @@
     <string name="default_channel_id" translatable="false">default_channel</string>
     <string name="default_channel_name">@string/app_name</string>
 
-    <string name="add">Add</string>
+    <string name="add_wallet">Add</string>
 
 </resources>

@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="?attr/walletCardWidth"
     android:layout_height="?attr/walletCardHeight"
-    android:background="@drawable/bg_wallet_card"
-    android:layout_marginTop="24dp">
+    android:background="@drawable/bg_wallet_card" >
 
     <ImageView
         android:id="@+id/image_card_circle"
@@ -28,8 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_bitcoin"
-        android:src="@drawable/ic_bitcoin"/>
+        tools:src="@drawable/ic_bitcoin" />
 
     <TextView
         android:id="@+id/txt_card_currency"

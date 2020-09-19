@@ -109,7 +109,7 @@ public class WalletsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (R.id.add ==item.getItemId()) {
+        if (R.id.add_new_wallet == item.getItemId()) {
             disposable.add(viewModel.addWallet().subscribe());
             return true;
         }

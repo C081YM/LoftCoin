@@ -13,12 +13,12 @@
         android:background="@drawable/bg_wallet_card"
         android:padding="56dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toTopOf="@id/guideline"
+        android:src="@drawable/ic_add_wallet"
+        app:tint="@color/slate"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
