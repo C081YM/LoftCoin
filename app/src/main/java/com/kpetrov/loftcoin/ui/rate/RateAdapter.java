@@ -14,7 +14,7 @@ import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.data.Coin;
 import com.kpetrov.loftcoin.util.ChangeFormatter;
 import com.kpetrov.loftcoin.util.LoaderImages;
-import com.kpetrov.loftcoin.util.OutlineCircle;
+import com.kpetrov.loftcoin.widget.OutlineCircle;
 import com.kpetrov.loftcoin.databinding.LiRateBinding;
 import com.kpetrov.loftcoin.util.PriceFormatter;
 import java.util.List;
@@ -55,9 +55,10 @@ public class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         this.loaderImages = loaderImages;
     }
 
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RateAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LiRateBinding.inflate(inflater, parent, false));
     }
 

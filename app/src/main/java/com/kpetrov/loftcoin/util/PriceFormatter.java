@@ -1,7 +1,6 @@
 package com.kpetrov.loftcoin.util;
 
 import android.content.Context;
-import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.os.ConfigurationCompat;
 import androidx.core.os.LocaleListCompat;
@@ -44,10 +43,6 @@ public class PriceFormatter implements Formatter<Double> {
     @Override
     public String format(@NonNull Double value) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return android.icu.text.NumberFormat.getCurrencyInstance().format(value);
-        } else {
-            return java.text.NumberFormat.getCurrencyInstance().format(value);
-        }
+        return NumberFormat.getCurrencyInstance().format(value);
     }
 }

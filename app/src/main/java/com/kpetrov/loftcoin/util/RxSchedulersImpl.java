@@ -21,7 +21,7 @@ class RxSchedulersImpl implements RxSchedulers {
     @NonNull
     @Override
     public Scheduler io() {
-        return Schedulers.io();
+        return ioScheduler;
     }
 
     @NonNull

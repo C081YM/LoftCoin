@@ -6,23 +6,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.kpetrov.loftcoin.BuildConfig;
 import com.kpetrov.loftcoin.data.Wallet;
 import com.kpetrov.loftcoin.databinding.LiWalletBinding;
+import com.kpetrov.loftcoin.util.BalanceFormatter;
+import com.kpetrov.loftcoin.util.LoaderImages;
+import com.kpetrov.loftcoin.widget.OutlineCircle;
 import com.kpetrov.loftcoin.util.PriceFormatter;
-
 import java.util.Objects;
-
 import javax.inject.Inject;
 
 class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
 
     private final PriceFormatter priceFormatter;
 
+    private final BalanceFormatter balanceFormatter;
+
+    private final LoaderImages loaderImages;
+
     private LayoutInflater inflater;
 
     @Inject
-    WalletsAdapter(PriceFormatter priceFormatter) {
+    WalletsAdapter(PriceFormatter priceFormatter, BalanceFormatter balanceFormatter, LoaderImages loaderImages) {
         super(new DiffUtil.ItemCallback<Wallet>() {
             @Override
             public boolean areItemsTheSame(@NonNull Wallet oldItem, @NonNull Wallet newItem) {
@@ -35,6 +40,8 @@ class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
             }
         });
         this.priceFormatter = priceFormatter;
+        this.balanceFormatter = balanceFormatter;
+        this.loaderImages = loaderImages;
     }
 
     @NonNull
@@ -47,7 +54,12 @@ class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Wallet wallet = getItem(position);
         holder.binding.txtCardCurrency.setText(wallet.coin().symbol());
-        holder.binding.txtCardMain.setText(priceFormatter.format(wallet.balance()));
+        holder.binding.txtCardMain.setText(balanceFormatter.format(wallet));
+        final double balance = wallet.balance() * wallet.coin().price();
+        holder.binding.txtCardSecondary.setText(priceFormatter.format(wallet.coin().currencyCode(), balance));
+        loaderImages
+                .load(BuildConfig.IMG_ENDPOINT + wallet.coin().id() + ".png")
+                .into(holder.binding.logo);
     }
 
     @Override
@@ -65,6 +77,7 @@ class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
         ViewHolder(@NonNull LiWalletBinding binding) {
             super(binding.getRoot());
             binding.getRoot().setClipToOutline(true);
+            OutlineCircle.apply(binding.logo);
             this.binding = binding;
         }
     }

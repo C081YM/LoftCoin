@@ -47,6 +47,23 @@ class CmcCoinsRepo implements CoinsRepo {
             .map((coin) -> coin);
     }
 
+    @NonNull
+    @Override
+    public Single<Coin> nextPopularCoin(@NonNull Currency currency, List<Integer> ids) {
+        return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
+                .switchMapSingle((coins) -> db.coins().nextPopularCoin(ids))
+                .firstOrError()
+                .map((coin) -> coin);
+    }
+
+    @NonNull
+    @Override
+    public Observable<List<Coin>> topCoins(@NonNull Currency currency) {
+        return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
+                .switchMap((coins) -> db.coins().fetchTop(3))
+                .map(Collections::unmodifiableList);
+    }
+
     private Observable<List<RoomCoin>> fetchFromDb(Query query) {
         if (query.sorting() == Sorting.PRICE) {
             return db.coins().fetchAllSortByPrice();
@@ -58,7 +75,8 @@ class CmcCoinsRepo implements CoinsRepo {
     private List<RoomCoin> mapToRoomCoins (Query query, List<? extends Coin> data) {
         List<RoomCoin> roomCoins = new ArrayList<>(data.size());
         for (Coin coin : data) {
-            roomCoins.add(RoomCoin.create(
+            roomCoins.add(
+                    RoomCoin.create(
                     coin.name(),
                     coin.symbol(),
                     coin.rank(),
@@ -66,7 +84,7 @@ class CmcCoinsRepo implements CoinsRepo {
                     coin.change24h(),
                     query.currency(),
                     coin.id()
-            ));
+            )            );
         }
         return roomCoins;
     }

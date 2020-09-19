@@ -1,4 +1,4 @@
-package com.kpetrov.loftcoin.ui.currency;
+package com.kpetrov.loftcoin.ui.converter;
 
 import androidx.lifecycle.ViewModel;
 import dagger.Binds;
@@ -7,10 +7,11 @@ import dagger.multibindings.ClassKey;
 import dagger.multibindings.IntoMap;
 
 @Module
-abstract class CurrencyModule {
+abstract class ConverterModule {
 
     @Binds
     @IntoMap
-    @ClassKey(CurrencyViewModel.class)
-    abstract ViewModel currencyViewModel(CurrencyViewModel impl);
+    @ClassKey(ConverterViewModel.class)
+    abstract ViewModel converterViewModel(ConverterViewModel impl);
+
 }

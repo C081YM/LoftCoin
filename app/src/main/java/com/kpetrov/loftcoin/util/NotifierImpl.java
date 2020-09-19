@@ -28,11 +28,9 @@ class NotifierImpl implements Notifier {
     NotifierImpl(Context context, RxSchedulers schedulers) {
         this.context = context;
         this.schedulers = schedulers;
-        this.ntf = (NotificationManager) context
-            .getSystemService(Context.NOTIFICATION_SERVICE);
+        ntf = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    @NonNull
     @Override
     public Completable sendMessage(@NonNull String title, @NonNull String message, @NonNull Class<?> receiver) {
         return Completable

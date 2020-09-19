@@ -30,7 +30,7 @@ public class FcmService extends FirebaseMessagingService {
         final RemoteMessage.Notification notification = remoteMessage.getNotification();
         if (notification != null) {
             disposable.add(notifier.sendMessage(
-                    Objects.toString(notification.getTitle(), getString(R.string.app_name)),
+                    Objects.toString(notification.getTitle(), getString(R.string.default_channel_name)),
                     Objects.toString(notification.getBody(),"Something wrong!"),
                     MainActivity.class
             ).subscribe());

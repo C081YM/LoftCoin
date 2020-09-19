@@ -11,6 +11,6 @@ import dagger.Component;
         BaseComponent.class
 })
 
-public  abstract class MainComponent {
+abstract class MainComponent {
     abstract void inject(MainActivity activity);
 }

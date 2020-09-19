@@ -29,4 +29,10 @@
         android:label="CurrencyDialog"
         tools:layout="@layout/dialog_currency"/>
 
+    <dialog
+        android:id="@+id/coins_sheet"
+        android:name="com.kpetrov.loftcoin.ui.converter.CoinsSheet"
+        android:label="CurrencyDialog"
+        tools:layout="@layout/dialog_currency"/>
+
 </navigation>

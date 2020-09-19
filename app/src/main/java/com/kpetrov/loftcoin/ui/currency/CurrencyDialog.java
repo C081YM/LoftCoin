@@ -12,7 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kpetrov.loftcoin.BaseComponent;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.DialogCurrencyBinding;
-import com.kpetrov.loftcoin.util.OnItemClick;
+import com.kpetrov.loftcoin.widget.OnItemClick;
 import javax.inject.Inject;
 
 public class CurrencyDialog extends AppCompatDialogFragment {
@@ -24,7 +24,7 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     private OnItemClick onItemClick;
 
     @Inject
-    public CurrencyDialog(BaseComponent baseComponent) {
+    CurrencyDialog(BaseComponent baseComponent) {
         component = DaggerCurrencyComponent.builder()
                 .baseComponent(baseComponent)
                 .build();
@@ -51,23 +51,23 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.dialogCurrencyRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
-        binding.dialogCurrencyRecycler.setAdapter(adapter);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        binding.recycler.setAdapter(adapter);
         viewModel.allCurrencies().observe(this, adapter::submitList);
-        onItemClick = new OnItemClick(binding.dialogCurrencyRecycler.getContext(), (v) -> {
-            final RecyclerView.ViewHolder viewHolder = binding.dialogCurrencyRecycler.findContainingViewHolder(v);
+        onItemClick = new OnItemClick((v) -> {
+            final RecyclerView.ViewHolder viewHolder = binding.recycler.findContainingViewHolder(v);
             if (viewHolder != null) {
                 viewModel.updateCurrency(adapter.getItem(viewHolder.getAdapterPosition()));
             }
             dismissAllowingStateLoss();
         });
-        binding.dialogCurrencyRecycler.addOnItemTouchListener(onItemClick);
+        binding.recycler.addOnItemTouchListener(onItemClick);
     }
 
     @Override
     public void onDestroy() {
-        binding.dialogCurrencyRecycler.removeOnItemTouchListener(onItemClick);
-        binding.dialogCurrencyRecycler.setAdapter(null);
+        binding.recycler.removeOnItemTouchListener(onItemClick);
+        binding.recycler.setAdapter(null);
         super.onDestroy();
     }
 }
