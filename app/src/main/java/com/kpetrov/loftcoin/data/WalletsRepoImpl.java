@@ -112,10 +112,12 @@ class WalletsRepoImpl implements WalletsRepo {
                     data.put("created_at", FieldValue.serverTimestamp());
                     return data;
                 })
-                .flatMapCompletable((wallet) -> Completable.create((emitter) -> firestore.collection("wallets").add(wallet)
+                .flatMapCompletable((wallet) -> Completable.create((emitter) -> {
+                    firestore.collection("wallets").add(wallet)
                             .addOnSuccessListener((r) -> {
                                 if (!emitter.isDisposed()) emitter.onComplete();
                             })
-                            .addOnFailureListener(emitter::tryOnError)));
+                            .addOnFailureListener(emitter::tryOnError);
+                }));
     }
 }

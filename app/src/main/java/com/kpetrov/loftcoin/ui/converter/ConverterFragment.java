@@ -13,14 +13,20 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.jakewharton.rxbinding3.view.RxView;
 import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.kpetrov.loftcoin.BaseComponent;
+import com.kpetrov.loftcoin.BuildConfig;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.FragmentConverterBinding;
+import com.kpetrov.loftcoin.util.LoaderImages;
+import com.kpetrov.loftcoin.widget.OutlineCircle;
+
 import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ConverterFragment extends Fragment {
 
     private final CompositeDisposable disposable = new CompositeDisposable();
+
+    private final LoaderImages loaderImages;                                                            //
 
     private final ConverterComponent component;
 
@@ -29,7 +35,8 @@ public class ConverterFragment extends Fragment {
     private ConverterViewModel viewModel;
 
     @Inject
-    ConverterFragment(BaseComponent baseComponent) {
+    ConverterFragment(BaseComponent baseComponent, LoaderImages loaderImages) {                             //
+        this.loaderImages = loaderImages;                                                                 //
 
         component = DaggerConverterComponent.builder()
                 .baseComponent(baseComponent)
@@ -57,6 +64,9 @@ public class ConverterFragment extends Fragment {
 
         final NavController navController = NavHostFragment.findNavController(this);
 
+        OutlineCircle.apply(binding.icCurrencyFrom);                                                  //
+        OutlineCircle.apply(binding.icCurrencyTo);                                                    //
+
         disposable.add(viewModel.topCoins().subscribe());
 
         disposable.add(RxView.clicks(binding.txtCurrencyFrom).subscribe(v -> {
@@ -72,10 +82,19 @@ public class ConverterFragment extends Fragment {
         }));
 
         disposable.add(viewModel.startCoin().subscribe(
-                coin -> binding.txtCurrencyFrom.setText(coin.symbol())
+                coin -> {
+                    binding.txtCurrencyFrom.setText(coin.symbol());
+                    loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
+                    .into(binding.icCurrencyFrom);
+                }
         ));
+
         disposable.add(viewModel.endCoin().subscribe(
-                coin -> binding.txtCurrencyTo.setText(coin.symbol())
+                coin -> {
+                    binding.txtCurrencyTo.setText(coin.symbol());
+                    loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
+                    .into(binding.icCurrencyTo);
+                }
         ));
 
         disposable.add(RxTextView.textChanges(binding.txtValueFrom).subscribe(viewModel::startCoinValue));
@@ -87,6 +106,7 @@ public class ConverterFragment extends Fragment {
                     binding.txtValueFrom.setText(text);
                     binding.txtValueFrom.setSelection(text.length());
                 }));
+
         disposable.add(viewModel.endCoinValue()
                 .distinctUntilChanged()
                 .subscribe(text -> {

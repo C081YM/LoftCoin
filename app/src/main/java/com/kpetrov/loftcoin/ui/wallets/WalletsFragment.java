@@ -84,6 +84,8 @@ public class WalletsFragment extends Fragment {
         binding.recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.HORIZONTAL, false));
         binding.recycler.addOnScrollListener(new CarouselScroller());
 
+        disposable.add(RecyclerViews.onSnap(binding.recycler, walletsSnapHelper).subscribe(viewModel::changeWallet));
+
         binding.recycler.setAdapter(walletsAdapter);
 
         disposable.add(viewModel.wallets().subscribe(walletsAdapter::submitList));
@@ -96,7 +98,7 @@ public class WalletsFragment extends Fragment {
         binding.transactions.setAdapter(transactionsAdapter);
         binding.transactions.setHasFixedSize(true);
 
-        disposable.add(RecyclerViews.onSnap(binding.recycler, walletsSnapHelper).subscribe(viewModel::changeWallet));
+
 
         disposable.add(viewModel.transactions().subscribe(transactionsAdapter::submitList));
     }

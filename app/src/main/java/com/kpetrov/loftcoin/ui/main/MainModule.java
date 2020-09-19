@@ -17,7 +17,7 @@ import dagger.multibindings.IntoMap;
 abstract class MainModule {
 
     @Binds
-    abstract FragmentFactory fragmentFactory(LoftFragmentFactory fragmentFactory);
+    abstract FragmentFactory fragmentFactory(LoftFragmentFactory loftFragmentFactory);
 
     @Binds
     @IntoMap

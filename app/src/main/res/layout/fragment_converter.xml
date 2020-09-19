@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/ic_currency_from"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="?attr/currencySymbolSizeInConverter"
+            android:layout_height="?attr/currencySymbolSizeInConverter"
             android:layout_gravity="center_vertical"
             tools:src="@drawable/ic_eth" />
 
@@ -66,8 +66,8 @@
 
         <ImageView
             android:id="@+id/ic_currency_to"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="?attr/currencySymbolSizeInConverter"
+            android:layout_height="?attr/currencySymbolSizeInConverter"
             android:layout_gravity="center_vertical"
             tools:src="@drawable/ic_bitcoin" />
 

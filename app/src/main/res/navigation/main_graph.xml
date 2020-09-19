@@ -26,13 +26,13 @@
     <dialog
         android:id="@+id/currency_dialog"
         android:name="com.kpetrov.loftcoin.ui.currency.CurrencyDialog"
-        android:label="CurrencyDialog"
+        android:label="@string/rate_menu_currency"
         tools:layout="@layout/dialog_currency"/>
 
     <dialog
         android:id="@+id/coins_sheet"
         android:name="com.kpetrov.loftcoin.ui.converter.CoinsSheet"
-        android:label="CurrencyDialog"
+        android:label="@string/coins_sheet_name"
         tools:layout="@layout/dialog_currency"/>
 
 </navigation>
