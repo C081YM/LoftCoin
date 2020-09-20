@@ -49,7 +49,7 @@ public class CoinsSheet extends BottomSheetDialogFragment {
         viewModel = new ViewModelProvider(requireParentFragment(), component.viewModelFactory())
                 .get(ConverterViewModel.class);
         adapter = component.coinsSheetAdapter();
-        mode = requireArguments().getInt(KEY_MODE, MODE_FROM);
+        mode= requireArguments().getInt(KEY_MODE, MODE_FROM);
     }
 
     @Nullable

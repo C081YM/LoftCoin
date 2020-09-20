@@ -42,8 +42,8 @@ class CmcCoinsRepo implements CoinsRepo {
     @Override
     public Single<Coin> coin(@NonNull Currency currency, long id) {
         return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
-            .switchMapSingle((coins) -> db.coins().fetchOne(id))
             .firstOrError()
+            .flatMap((coins) -> db.coins().fetchOne(id))
             .map((coin) -> coin);
     }
 
@@ -51,8 +51,8 @@ class CmcCoinsRepo implements CoinsRepo {
     @Override
     public Single<Coin> nextPopularCoin(@NonNull Currency currency, List<Integer> ids) {
         return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
-                .switchMapSingle((coins) -> db.coins().nextPopularCoin(ids))
                 .firstOrError()
+                .flatMap((coins) -> db.coins().nextPopularCoin(ids))
                 .map((coin) -> coin);
     }
 

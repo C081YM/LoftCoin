@@ -41,7 +41,9 @@ class WalletsViewModel extends ViewModel {
                 .autoConnect();
 
         transactions = wallets
+                .filter((f) -> !f.isEmpty())
                 .switchMap((wallets) -> walletPosition
+                        .map((position) -> Math.min(position, wallets.size() -1))
                         .map(wallets::get)
                 )
                 .switchMap(walletsRepo::transactions)
@@ -62,17 +64,16 @@ class WalletsViewModel extends ViewModel {
     @NonNull
     Completable addWallet() {
         return wallets
-                .switchMapSingle((list) -> Observable
+                .firstOrError()
+                .flatMap((list) -> Observable
                         .fromIterable(list)
                         .map(Wallet::coin)
                         .map(Coin::id)
                         .toList()
                 )
-                .switchMapCompletable((ids) -> currencyRepo
+                        .flatMapCompletable((ids) -> currencyRepo
                         .currency()
-                        .firstOrError()
-                        .map((currency) -> walletsRepo.addWallet(currency, ids))
-                        .ignoreElement()
+                        .flatMapCompletable((completable) -> walletsRepo.addWallet(completable, ids))
                 )
                 .observeOn(schedulers.main());
     }

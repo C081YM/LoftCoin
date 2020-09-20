@@ -68,8 +68,6 @@ class WalletsAdapter extends ListAdapter<Wallet, WalletsAdapter.ViewHolder> {
         inflater = LayoutInflater.from(recyclerView.getContext());
     }
 
-
-
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final LiWalletBinding binding;

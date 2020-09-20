@@ -43,7 +43,6 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         binding = DialogCurrencyBinding.inflate(requireActivity().getLayoutInflater());
         return new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle(R.string.rate_menu_currency)
                 .setView(binding.getRoot())
                 .create();
     }

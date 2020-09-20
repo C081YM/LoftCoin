@@ -25,7 +25,7 @@ public class ConverterFragment extends Fragment {
 
     private final CompositeDisposable disposable = new CompositeDisposable();
 
-    private final LoaderImages loaderImages;                                                            //
+    private final LoaderImages loaderImages;
 
     private final ConverterComponent component;
 
@@ -34,8 +34,8 @@ public class ConverterFragment extends Fragment {
     private ConverterViewModel viewModel;
 
     @Inject
-    ConverterFragment(BaseComponent baseComponent, LoaderImages loaderImages) {                             //
-        this.loaderImages = loaderImages;                                                                 //
+    ConverterFragment(BaseComponent baseComponent, LoaderImages loaderImages) {
+        this.loaderImages = loaderImages;
 
         component = DaggerConverterComponent.builder()
                 .baseComponent(baseComponent)
@@ -63,8 +63,8 @@ public class ConverterFragment extends Fragment {
 
         final NavController navController = NavHostFragment.findNavController(this);
 
-        OutlineCircle.apply(binding.icCurrencyFrom);                                                  //
-        OutlineCircle.apply(binding.icCurrencyTo);                                                    //
+        OutlineCircle.apply(binding.icCurrencyFrom);
+        OutlineCircle.apply(binding.icCurrencyTo);
 
         disposable.add(viewModel.topCoins().subscribe());
 

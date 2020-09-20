@@ -122,6 +122,7 @@ public class WalletsFragment extends Fragment {
     public void onDestroyView() {
         walletsSnapHelper.attachToRecyclerView(null);
         binding.recycler.setAdapter(null);
+        binding.transactions.setAdapter(null);
         disposable.clear();
         super.onDestroyView();
     }

@@ -32,7 +32,6 @@
         <item name="actionBarPopupTheme">@style/AppTheme.PopupOverlay</item>
 
         <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
-        <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheet.Dialog</item>
 
         <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
 
@@ -68,10 +67,6 @@
         <item name="android:background">?attr/colorPrimaryVariant</item>
         <item name="itemIconTint">@color/bottom_nav_item</item>
         <item name="itemTextColor">@color/bottom_nav_item</item>
-    </style>
-
-    <style name="AppTheme.BottomSheet.Dialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="colorSurface">@color/dark_five</item>
     </style>
 
     <style name="Widget.AppTheme.Button.Welcome" parent="Widget.MaterialComponents.TextView">

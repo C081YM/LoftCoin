@@ -27,13 +27,15 @@ class ConverterViewModel extends ViewModel {
 
     private final RxSchedulers schedulers;
 
-    private final Observable<Double> factor;
+    private final Observable<Double> factorStartEnd;
+
+    private final Observable<Double> factorEndStart;
 
     @Inject
     ConverterViewModel(CurrencyRepo currencyRepo, CoinsRepo coinsRepo, RxSchedulers schedulers) {
         this.schedulers = schedulers;
 
-        this.topCoins = currencyRepo
+        topCoins = currencyRepo
                 .currency()
                 .switchMap(coinsRepo::topCoins)
                 .doOnNext(coins -> startCoin.onNext(coins.get(0)))
@@ -41,9 +43,15 @@ class ConverterViewModel extends ViewModel {
                 .replay(1)
                 .autoConnect();
 
-        factor = startCoin
+        factorStartEnd = startCoin
                 .flatMap((sc) -> endCoin
                         .map((ec) -> sc.price() / ec.price()))
+                .replay(1)
+                .autoConnect();
+
+        factorEndStart = endCoin
+                .flatMap((dv) -> startCoin
+                        .map((rb) -> dv.price() / rb.price()))
                 .replay(1)
                 .autoConnect();
     }
@@ -65,7 +73,14 @@ class ConverterViewModel extends ViewModel {
 
     @NonNull
     Observable<String> startCoinValue() {
-        return startCoinValue.observeOn(schedulers.main());
+        return endCoinValue
+                .observeOn(schedulers.cmp())
+                .map((s) -> s.isEmpty() ? "0.0" : s)
+                .map(Double::parseDouble)
+                .flatMap((value) -> factorStartEnd.map((f) -> value * f))
+                .map(v -> String.format(Locale.US, "%.2f", v))
+                .map((v) -> "0.0".equals(v) ? "" : v)
+                .observeOn(schedulers.main());
     }
 
     @NonNull
@@ -74,9 +89,9 @@ class ConverterViewModel extends ViewModel {
                 .observeOn(schedulers.cmp())
                 .map((s) -> s.isEmpty() ? "0.0" : s)
                 .map(Double::parseDouble)
-                .flatMap((value) -> factor.map((f) -> value * f))
-                .map(v -> String.format(Locale.US, "%.2f", v))
-                .map((v) -> "0.0".equals(v) ? "" : v)
+                .flatMap((value) -> factorEndStart.map((f) -> value * f))
+                .map(vv -> String.format(Locale.US, "%.2f", vv))
+                .map((vv) -> "0.0".equals(vv) ? "" : vv)
                 .observeOn(schedulers.main());
     }
 
