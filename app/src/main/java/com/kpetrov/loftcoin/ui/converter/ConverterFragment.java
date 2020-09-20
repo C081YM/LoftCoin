@@ -18,7 +18,6 @@ import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.FragmentConverterBinding;
 import com.kpetrov.loftcoin.util.LoaderImages;
 import com.kpetrov.loftcoin.widget.OutlineCircle;
-
 import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -85,7 +84,7 @@ public class ConverterFragment extends Fragment {
                 coin -> {
                     binding.txtCurrencyFrom.setText(coin.symbol());
                     loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
-                    .into(binding.icCurrencyFrom);
+                            .into(binding.icCurrencyFrom);
                 }
         ));
 
@@ -93,7 +92,7 @@ public class ConverterFragment extends Fragment {
                 coin -> {
                     binding.txtCurrencyTo.setText(coin.symbol());
                     loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
-                    .into(binding.icCurrencyTo);
+                            .into(binding.icCurrencyTo);
                 }
         ));
 

@@ -6,6 +6,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -95,7 +96,7 @@ public class RateAdapter extends ListAdapter<Coin, RateAdapter.ViewHolder> {
         }
 
         loaderImages.load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
-                 .into(holder.binding.logo);
+                .into(holder.binding.logo);
     }
 
     @Override

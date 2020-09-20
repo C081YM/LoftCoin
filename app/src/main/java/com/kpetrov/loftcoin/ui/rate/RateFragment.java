@@ -64,8 +64,8 @@ public class RateFragment extends Fragment {
         binding.refresher.setOnRefreshListener(() -> viewModel.refresh());
         disposable.add(viewModel.coins().subscribe(adapter::submitList));
         disposable.add(viewModel.onError().subscribe(e -> Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Retry", v -> viewModel.retry())
-                    .show()));
+                .setAction("Retry", v -> viewModel.retry())
+                .show()));
         disposable.add(viewModel.isRefreshing().subscribe(binding.refresher::setRefreshing));
     }
 
