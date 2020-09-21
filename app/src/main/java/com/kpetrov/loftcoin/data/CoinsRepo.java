@@ -1,14 +1,25 @@
 package com.kpetrov.loftcoin.data;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import com.google.auto.value.AutoValue;
 import java.util.List;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface CoinsRepo {
 
     @NonNull
-    LiveData<List<Coin>> listings(@NonNull Query query);
+    Observable<List<Coin>> listings(@NonNull Query query);
+
+    @NonNull
+    Single<Coin> coin(@NonNull Currency currency, long id);
+
+    @NonNull
+    Single<Coin> nextPopularCoin(@NonNull Currency currency, List<Integer> ids);
+
+    @NonNull
+    Observable<List<Coin>> topCoins(@NonNull Currency currency);
+
 
     @AutoValue
     abstract class Query {
@@ -16,7 +27,8 @@ public interface CoinsRepo {
         @NonNull
         public static Builder builder() {
             return new AutoValue_CoinsRepo_Query.Builder()
-                    .forceUpdate(true);
+                    .forceUpdate(true)
+                    .sorting(Sorting.RANK);
         }
 
         abstract String currency();

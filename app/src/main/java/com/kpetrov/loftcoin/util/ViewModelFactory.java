@@ -12,7 +12,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final Map<Class<?>, Provider<ViewModel>> providers;
 
     @Inject
-    ViewModelFactory(Map<Class<?>, Provider<ViewModel>> providers) {
+    public ViewModelFactory(Map<Class<?>, Provider<ViewModel>> providers) {
         this.providers = providers;
     }
 

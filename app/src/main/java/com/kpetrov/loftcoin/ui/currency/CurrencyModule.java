@@ -1,7 +1,6 @@
 package com.kpetrov.loftcoin.ui.currency;
 
 import androidx.lifecycle.ViewModel;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.ClassKey;

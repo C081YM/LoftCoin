@@ -9,6 +9,7 @@
     <attr name="currencySymbolSize" format="dimension|reference"/>
     <attr name="rateBackgroundDark" format="color|reference"/>
     <attr name="rateBackgroundGray" format="color|reference"/>
+    <attr name="currencySymbolSizeInConverter" format="dimension|reference"/>
 
 
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -31,6 +32,7 @@
         <item name="actionBarPopupTheme">@style/AppTheme.PopupOverlay</item>
 
         <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
+
         <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
 
         <item name="buttonWelcome">@style/Widget.AppTheme.Button.Welcome</item>
@@ -43,6 +45,7 @@
         <item name="textPositive">@color/weird_green</item>
 
         <item name="currencySymbolSize">40dp</item>
+        <item name="currencySymbolSizeInConverter">18dp</item>
 
         <item name="rateBackgroundDark">?attr/colorPrimary</item>
         <item name="rateBackgroundGray">@color/dark_two</item>

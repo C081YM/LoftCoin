@@ -18,4 +18,10 @@
     <string name="eur">Евро | EUR</string>
     <string name="rub">Рубль | RUB</string>
 
+    <string name="default_channel_name">@string/app_name</string>
+
+    <string name="coins_sheet_name">Выбор валюты</string>
+
+    <string name="add_wallet">Добавить</string>
+
 </resources>

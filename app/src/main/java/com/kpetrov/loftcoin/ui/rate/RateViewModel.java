@@ -1,66 +1,77 @@
 package com.kpetrov.loftcoin.ui.rate;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import com.kpetrov.loftcoin.data.Coin;
 import com.kpetrov.loftcoin.data.CoinsRepo;
 import com.kpetrov.loftcoin.data.CurrencyRepo;
 import com.kpetrov.loftcoin.data.Sorting;
+import com.kpetrov.loftcoin.util.RxSchedulers;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
-public class RateViewModel extends ViewModel {
+class RateViewModel extends ViewModel {
 
-    private final MutableLiveData<Boolean> isRefreshing = new MutableLiveData<>();
-    private final MutableLiveData<AtomicBoolean> forceRefresh = new MutableLiveData<>(new AtomicBoolean(true));
-    private final LiveData<List<Coin>> coins;
-    private final MutableLiveData<Sorting> sorting = new MutableLiveData<>(Sorting.PRICE_DESK);
+    private final Subject<Boolean> isRefreshing = BehaviorSubject.create();
+    private final Subject<Class<?>> pullToRefresh = BehaviorSubject.createDefault(Void.TYPE);
+    private final Subject<Sorting> sorting = BehaviorSubject.createDefault(Sorting.RANK);
+    private final Subject<Throwable> error = PublishSubject.create();
+    private final Subject<Class<?>> onRetry = PublishSubject.create();
+    private final AtomicBoolean forceUpdate = new AtomicBoolean();
+    private final Observable<List<Coin>> coins;
+    private final RxSchedulers schedulers;
     private int sortingIndex = 1;
 
     @Inject
-    RateViewModel(CoinsRepo coinsRepo, CurrencyRepo currencyRepo) {
-
-        final LiveData<CoinsRepo.Query> query = Transformations.switchMap(forceRefresh, (r) -> {
-            return Transformations.switchMap(currencyRepo.currency(), (c) -> {
-                r.set(true);
-                isRefreshing.postValue(true);
-                return Transformations.map(sorting, (s) -> {
-                    return CoinsRepo.Query.builder()
-                             .currency(c.code())
-                             .forceUpdate(r.getAndSet(false))
-                             .sorting(s)
-                             .build();
-                    });
-                });
-        });
-
-        final LiveData<List<Coin>> coins = Transformations.switchMap(query, coinsRepo::listings);
-
-        this.coins = Transformations.map(coins, (c) -> {
-            isRefreshing.postValue(false);
-            return c;
-        });
+    RateViewModel(CoinsRepo coinsRepo, CurrencyRepo currencyRepo, RxSchedulers schedulers) {
+        this.schedulers = schedulers;
+        this.coins = pullToRefresh
+                .map((ptr) -> CoinsRepo.Query.builder())
+                .switchMap((qb) -> currencyRepo.currency()
+                .map((c) -> qb.currency(c.code())))
+                .doOnNext((qb) -> forceUpdate.set(true))
+                .doOnNext((qb) -> isRefreshing.onNext(true))
+                .switchMap((qb) -> sorting.map(qb::sorting))
+                .map((qb) -> qb.forceUpdate(forceUpdate.getAndSet(false)))
+                .map(CoinsRepo.Query.Builder::build)
+                .switchMap((q) -> coinsRepo
+                .listings(q)
+                .doOnError(error::onNext)
+                .retryWhen(e -> onRetry))
+                .doOnEach((ntf) -> isRefreshing.onNext(false))
+                .replay(1)
+                .autoConnect();
     }
 
     @NonNull
-    LiveData<List<Coin>> coins() {
-        return coins;
+    Observable<List<Coin>> coins() {
+        return coins.observeOn(schedulers.main());
     }
 
     @NonNull
-    LiveData<Boolean> isRefreshing() {
-        return isRefreshing;
+    Observable<Boolean> isRefreshing() {
+        return isRefreshing.observeOn(schedulers.main());
+    }
+
+    @NonNull
+    Observable<Throwable> onError() {
+        return error.observeOn(schedulers.main());
     }
 
     final void refresh() {
-       forceRefresh.postValue(new AtomicBoolean(true));
+        pullToRefresh.onNext(Void.TYPE);
     }
 
     void switchSortingOrder() {
-        sorting.postValue(Sorting.values()[sortingIndex++ % Sorting.values().length]);
+        sorting.onNext(Sorting.values()[sortingIndex++ % Sorting.values().length]);
+    }
+
+    void retry() {
+        onRetry.onNext(Void.class);
     }
 }

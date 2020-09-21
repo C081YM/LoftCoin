@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="?attr/walletCardWidth"
     android:layout_height="?attr/walletCardHeight"
-    android:background="@drawable/bg_wallet_card"
-    android:layout_marginTop="24dp">
+    android:background="@drawable/bg_wallet_card" >
 
     <ImageView
         android:id="@+id/image_card_circle"
@@ -18,7 +17,7 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/ic_bitcoin"
+        android:id="@+id/logo"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
@@ -28,8 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_bitcoin"
-        android:src="@drawable/ic_bitcoin"/>
+        tools:src="@drawable/ic_bitcoin" />
 
     <TextView
         android:id="@+id/txt_card_currency"
@@ -37,10 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:textAppearance="?attr/textAppearanceHeadline4"
-        app:layout_constraintStart_toEndOf="@id/ic_bitcoin"
-        app:layout_constraintTop_toTopOf="@id/ic_bitcoin"
-        tools:text="BTC"
-        android:text="BTC"/>
+        app:layout_constraintStart_toEndOf="@id/logo"
+        app:layout_constraintTop_toTopOf="@id/logo"
+        tools:text="BTC" />
 
     <TextView
         android:id="@+id/txt_card_main"
@@ -51,8 +48,7 @@
         android:textAppearance="?attr/textAppearanceHeadline3"
         app:layout_constraintBottom_toTopOf="@id/txt_card_secondary"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2.77744 BTC"
-        android:text="2.77744 BTC"/>
+        tools:text="2.77744 BTC" />
 
     <TextView
         android:id="@+id/txt_card_secondary"
@@ -64,7 +60,6 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="2.77744 $"
-        android:text="2.77744 $"/>
+        tools:text="2.77744 $" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

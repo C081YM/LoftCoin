@@ -2,6 +2,7 @@ package com.kpetrov.loftcoin.ui.main;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentFactory;
+import com.kpetrov.loftcoin.ui.converter.CoinsSheet;
 import com.kpetrov.loftcoin.ui.converter.ConverterFragment;
 import com.kpetrov.loftcoin.ui.currency.CurrencyDialog;
 import com.kpetrov.loftcoin.ui.rate.RateFragment;
@@ -16,7 +17,7 @@ import dagger.multibindings.IntoMap;
 abstract class MainModule {
 
     @Binds
-    abstract FragmentFactory fragmentFactory(LoftFragmentFactory fragmentFactory);
+    abstract FragmentFactory fragmentFactory(LoftFragmentFactory loftFragmentFactory);
 
     @Binds
     @IntoMap
@@ -37,4 +38,11 @@ abstract class MainModule {
     @IntoMap
     @ClassKey(CurrencyDialog.class)
     abstract Fragment currencyDialog(CurrencyDialog impl);
+
+    @Binds
+    @IntoMap
+    @ClassKey(CoinsSheet.class)
+    abstract Fragment coinsSheet(CoinsSheet impl);
+
+
 }

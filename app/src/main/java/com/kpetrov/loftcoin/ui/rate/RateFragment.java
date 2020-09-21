@@ -14,13 +14,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 import com.kpetrov.loftcoin.BaseComponent;
 import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.FragmentRateBinding;
 import javax.inject.Inject;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class RateFragment extends Fragment {
 
+    private final CompositeDisposable disposable = new CompositeDisposable();
     private final RateComponent component;
     private FragmentRateBinding binding;
     private RateAdapter adapter;
@@ -40,8 +43,8 @@ public class RateFragment extends Fragment {
                 .get(RateViewModel.class);
 
         adapter = component.rateAdapter();
-
         adapter.registerAdapterDataObserver(dataObserver);
+
     }
 
     @Nullable
@@ -58,13 +61,12 @@ public class RateFragment extends Fragment {
         binding.recycler.setLayoutManager(new LinearLayoutManager(view.getContext()));
         binding.recycler.swapAdapter(adapter, false);
         binding.recycler.setHasFixedSize(true);
-
-        binding.refresher.setOnRefreshListener(() -> {
-            viewModel.refresh();
-        });
-
-        viewModel.coins().observe(getViewLifecycleOwner(), adapter::submitList);
-        viewModel.isRefreshing().observe(getViewLifecycleOwner(), binding.refresher::setRefreshing);
+        binding.refresher.setOnRefreshListener(() -> viewModel.refresh());
+        disposable.add(viewModel.coins().subscribe(adapter::submitList));
+        disposable.add(viewModel.onError().subscribe(e -> Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", v -> viewModel.retry())
+                .show()));
+        disposable.add(viewModel.isRefreshing().subscribe(binding.refresher::setRefreshing));
     }
 
     @Override
@@ -90,8 +92,9 @@ public class RateFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        binding.recycler.swapAdapter(null, false);
+        binding.recycler.setAdapter(null);
         adapter.unregisterAdapterDataObserver(dataObserver);
+        disposable.clear();
         super.onDestroyView();
     }
 
@@ -126,4 +129,6 @@ public class RateFragment extends Fragment {
             binding.recycler.scrollToPosition(0);
         }
     };
+
+
 }
