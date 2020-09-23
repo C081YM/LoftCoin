@@ -76,6 +76,7 @@ class ConverterViewModel extends ViewModel {
         return endCoinValue
                 .observeOn(schedulers.cmp())
                 .map((s) -> s.isEmpty() ? "0.0" : s)
+                .map((s) -> s.equals(".") ? "0.0" : s)
                 .map(Double::parseDouble)
                 .flatMap((value) -> factorStartEnd.map((f) -> value * f))
                 .map(v -> String.format(Locale.US, "%.2f", v))
@@ -88,10 +89,11 @@ class ConverterViewModel extends ViewModel {
         return startCoinValue
                 .observeOn(schedulers.cmp())
                 .map((s) -> s.isEmpty() ? "0.0" : s)
+                .map((s) -> s.equals(".") ? "0.0" : s)
                 .map(Double::parseDouble)
                 .flatMap((value) -> factorEndStart.map((f) -> value * f))
-                .map(vv -> String.format(Locale.US, "%.2f", vv))
-                .map((vv) -> "0.0".equals(vv) ? "" : vv)
+                .map(v -> String.format(Locale.US, "%.2f", v))
+                .map((v) -> "0.0".equals(v) ? "" : v)
                 .observeOn(schedulers.main());
     }
 
