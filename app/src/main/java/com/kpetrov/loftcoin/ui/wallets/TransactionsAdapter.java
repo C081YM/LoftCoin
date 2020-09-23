@@ -85,8 +85,6 @@ public class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAd
         }
     }
 
-
-
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -111,7 +109,5 @@ public class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAd
             binding.getRoot().setClipToOutline(true);
             this.binding = binding;
         }
-
     }
-
 }

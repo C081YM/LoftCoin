@@ -20,7 +20,6 @@ public interface CoinsRepo {
     @NonNull
     Observable<List<Coin>> topCoins(@NonNull Currency currency);
 
-
     @AutoValue
     abstract class Query {
 
@@ -31,9 +30,9 @@ public interface CoinsRepo {
                     .sorting(Sorting.RANK);
         }
 
-        abstract String currency();
-        abstract boolean forceUpdate();
-        abstract Sorting sorting();
+        public abstract String currency();
+        public abstract boolean forceUpdate();
+        public abstract Sorting sorting();
 
         @AutoValue.Builder
         public abstract static class Builder {

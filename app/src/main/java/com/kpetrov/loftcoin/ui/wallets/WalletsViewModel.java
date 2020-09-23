@@ -81,5 +81,4 @@ class WalletsViewModel extends ViewModel {
     void changeWallet(int position) {
         walletPosition.onNext(position);
     }
-
 }
