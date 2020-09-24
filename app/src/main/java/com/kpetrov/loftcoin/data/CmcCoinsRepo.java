@@ -27,24 +27,24 @@ class CmcCoinsRepo implements CoinsRepo {
     @NonNull
     @Override
     public Observable<List<Coin>> listings(@NonNull Query query) {
-         return Observable
-            .fromCallable(() -> query.forceUpdate() || db.coins().coinsCount() == 0)
-            .switchMap((f) -> f ? api.listings(query.currency()) : Observable.empty())
-            .map((listings) ->  mapToRoomCoins(query, listings.data()))
-            .doOnNext((coins) -> db.coins().insert(coins))
-            .switchMap((coins) -> fetchFromDb(query))
-            .switchIfEmpty(fetchFromDb(query))
-            .<List<Coin>>map(Collections::unmodifiableList)
-            .subscribeOn(schedulers.io());
+        return Observable
+                .fromCallable(() -> query.forceUpdate() || db.coins().coinsCount() == 0)
+                .switchMap((f) -> f ? api.listings(query.currency()) : Observable.empty())
+                .map((listings) ->  mapToRoomCoins(query, listings.data()))
+                .doOnNext((coins) -> db.coins().insert(coins))
+                .switchMap((coins) -> fetchFromDb(query))
+                .switchIfEmpty(fetchFromDb(query))
+                .<List<Coin>>map(Collections::unmodifiableList)
+                .subscribeOn(schedulers.io());
     }
 
     @NonNull
     @Override
     public Single<Coin> coin(@NonNull Currency currency, long id) {
         return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
-            .firstOrError()
-            .flatMap((coins) -> db.coins().fetchOne(id))
-            .map((coin) -> coin);
+                .firstOrError()
+                .flatMap((coins) -> db.coins().fetchOne(id))
+                .map((coin) -> coin);
     }
 
     @NonNull
@@ -77,14 +77,14 @@ class CmcCoinsRepo implements CoinsRepo {
         for (Coin coin : data) {
             roomCoins.add(
                     RoomCoin.create(
-                    coin.name(),
-                    coin.symbol(),
-                    coin.rank(),
-                    coin.price(),
-                    coin.change24h(),
-                    query.currency(),
-                    coin.id()
-            )            );
+                            coin.name(),
+                            coin.symbol(),
+                            coin.rank(),
+                            coin.price(),
+                            coin.change24h(),
+                            query.currency(),
+                            coin.id()
+                    )            );
         }
         return roomCoins;
     }

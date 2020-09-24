@@ -129,6 +129,4 @@ public class RateFragment extends Fragment {
             binding.recycler.scrollToPosition(0);
         }
     };
-
-
 }

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kpetrov.loftcoin.BaseComponent;
-import com.kpetrov.loftcoin.R;
 import com.kpetrov.loftcoin.databinding.DialogCurrencyBinding;
 import com.kpetrov.loftcoin.widget.OnItemClick;
 import javax.inject.Inject;

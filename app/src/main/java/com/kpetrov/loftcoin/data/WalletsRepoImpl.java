@@ -57,7 +57,7 @@ class WalletsRepoImpl implements WalletsRepo {
                         .fromIterable(documents)
                         .concatMapSingle((document) -> coinsRepo
                                 .coin(currency, Objects.requireNonNull(document
-                                .getLong("coinId"), "coinId"))
+                                        .getLong("coinId"), "coinId"))
                                 .map((coin) -> Wallet.create(
                                         document.getId(),
                                         coin,
@@ -72,7 +72,7 @@ class WalletsRepoImpl implements WalletsRepo {
     @NonNull
     @Override
     public Observable<List<Transaction>> transactions(@NonNull Wallet wallet) {
-         return Observable
+        return Observable
                 .<QuerySnapshot>create(emitter -> {
                     final ListenerRegistration registration = firestore
                             .collection("wallets")
@@ -90,14 +90,14 @@ class WalletsRepoImpl implements WalletsRepo {
                 })
                 .map(QuerySnapshot::getDocuments)
                 .switchMapSingle((documents) -> Observable
-                .fromIterable(documents)
-                .map((document) -> Transaction.create(
-                        document.getId(),
-                        wallet.coin(),
-                        document.getDouble("amount"),
-                        document.getDate("created_at")
-                ))
-                .toList()
+                        .fromIterable(documents)
+                        .map((document) -> Transaction.create(
+                                document.getId(),
+                                wallet.coin(),
+                                document.getDouble("amount"),
+                                document.getDate("created_at")
+                        ))
+                        .toList()
                 );
     }
 

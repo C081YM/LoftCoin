@@ -48,7 +48,6 @@ public class WalletsFragment extends Fragment {
                 .build();
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +96,6 @@ public class WalletsFragment extends Fragment {
         binding.transactions.setLayoutManager(new LinearLayoutManager(view.getContext()));
         binding.transactions.setAdapter(transactionsAdapter);
         binding.transactions.setHasFixedSize(true);
-
-
 
         disposable.add(viewModel.transactions().subscribe(transactionsAdapter::submitList));
     }
